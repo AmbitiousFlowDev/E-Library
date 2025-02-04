@@ -39,8 +39,7 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity
-                .authenticationProvider(authenticationProvider())
+        return httpSecurity.csrf(AbstractHttpConfigurer::disable).authenticationProvider(authenticationProvider())
                 .securityContext(context -> context.securityContextRepository(securityContextRepository()))
                 .authorizeHttpRequests(registry -> {
                     registry.requestMatchers("/api/v1/**").permitAll();
