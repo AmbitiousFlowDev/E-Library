@@ -1,12 +1,12 @@
-
-import './styles/App.css'
+import {Provider} from "react-redux";
+import {Storage}  from "./storage/Storage.jsx";
 
 function App() {
 
   return (
-    <>
-     <center><h1>hello in Client</h1></center>
-    </>
+    <Provider store={Storage}>
+
+    </Provider>
   )
 }
 
