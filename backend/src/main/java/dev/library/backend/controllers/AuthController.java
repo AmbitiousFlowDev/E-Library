@@ -1,6 +1,8 @@
 package dev.library.backend.controllers;
 
-import org.apache.catalina.connector.Response;
+import dev.library.backend.services.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.library.backend.models.User;
 import dev.library.backend.models.enums.Role;
-import dev.library.backend.repositories.UserRepository;
+import dev.library.backend.requests.LoginRequest;
 import dev.library.backend.requests.RegisterRequest;
 import dev.library.backend.services.UserService;
 
@@ -22,34 +24,32 @@ import dev.library.backend.services.UserService;
 @CrossOrigin
 @RequestMapping("/api/v1/auth")
 public class AuthController {
-    
-    private AuthenticationManager authenticationManager;
-    private UserService userService;
-    private PasswordEncoder passwordEncoder;
-
+    private final AuthService authService;
     @Autowired
-    public AuthController(UserService userService , AuthenticationManager authenticationManager , PasswordEncoder passwordEncoder) {
-        this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
+    public AuthController(AuthService authService) {
+       this.authService = authService;
     }
-
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) {
-
-        if (this.userService.findUser(registerRequest.getUsername()) != null) {
-            return new ResponseEntity<>("Username is taken !" , HttpStatus.BAD_REQUEST);
+        boolean result = this.authService.register(registerRequest);
+        if (!result) {
+            return new ResponseEntity<>("Registration error", HttpStatus.BAD_REQUEST);
         }
-        User user = new User();
+        return new ResponseEntity<>("Registration successful", HttpStatus.OK);
+    }
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest , HttpServletRequest httpServletRequest) {
+        boolean result = this.authService.login(loginRequest , httpServletRequest);
+        if (!result) {
+            return new ResponseEntity<>("Login error", HttpStatus.BAD_REQUEST);
+        }
+        HttpSession session = httpServletRequest.getSession(false);
 
-        user.setUsername(registerRequest.getUsername());
-        user.setFullName(registerRequest.getFullName());
-        user.setEmail(registerRequest.getEmail());
-        user.setPassword(this.passwordEncoder.encode(registerRequest.getPassword()));
-        user.setRole(Role.USER);
+        if (session != null) {
+            String sessionId = session.getId();
+            return ResponseEntity.ok().header("JSESSIONID", sessionId).body("Login successful");
+        }
 
-        this.userService.create(user);
-
-        return new ResponseEntity<>("User Registered Successfully" , HttpStatus.OK);
+        return new ResponseEntity<>("Login successful", HttpStatus.OK);
     }
 }
