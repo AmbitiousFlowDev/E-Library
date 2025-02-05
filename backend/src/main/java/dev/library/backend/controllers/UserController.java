@@ -1,4 +1,4 @@
-package dev.library.backend.controller;
+package dev.library.backend.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.library.backend.models.User;
-import dev.library.backend.service.UserService;
+import dev.library.backend.services.UserService;
 
 @RestController
 @CrossOrigin
