@@ -19,9 +19,8 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    @GetMapping("/{username}")
-    public User showUser(@PathVariable String username) {
-        return this.userService.getUser("sikrox.memer");
-    }
-    
+//    @GetMapping("/{username}")
+//    public User showUser(@PathVariable String username) {
+////        return this.userService.getUser("sikrox.memer");
+//    }
 }
