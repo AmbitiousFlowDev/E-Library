@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.library.backend.models.User;
+import dev.library.backend.models.enums.Role;
 import dev.library.backend.repositories.UserRepository;
 import dev.library.backend.requests.RegisterRequest;
 import dev.library.backend.services.UserService;
@@ -34,9 +36,20 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) {
+
         if (this.userService.findUser(registerRequest.getUsername()) != null) {
-            return new ResponseEntity<>("Username already exists" , HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Username is taken !" , HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(registerRequest.getUsername() , HttpStatus.OK);
+        User user = new User();
+
+        user.setUsername(registerRequest.getUsername());
+        user.setFullName(registerRequest.getFullName());
+        user.setEmail(registerRequest.getEmail());
+        user.setPassword(this.passwordEncoder.encode(registerRequest.getPassword()));
+        user.setRole(Role.USER);
+
+        this.userService.create(user);
+
+        return new ResponseEntity<>("User Registered Successfully" , HttpStatus.OK);
     }
 }
