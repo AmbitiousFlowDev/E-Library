@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -39,7 +40,17 @@ public class SecurityConfiguration {
                     register.requestMatchers(HttpMethod.POST , "/api/v1/auth/**").permitAll();
                     register.requestMatchers(HttpMethod.GET , "/api/v1/**").permitAll();
                     register.requestMatchers("/api/v1/user/**").hasRole("USER");
-                }).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                })
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                .logout(logout ->
+                        logout.logoutUrl("/api/v1/auth/logout")
+                                .invalidateHttpSession(true)
+                                .deleteCookies("JSESSIONID")
+                                .logoutSuccessHandler((request, response, authentication) -> {
+                                    response.setStatus(HttpStatus.OK.value());
+                                    response.getWriter().write("Logout successful");
+                                })
+                        )
                 .build();
     }
     @Bean
