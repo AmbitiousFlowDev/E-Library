@@ -2,6 +2,7 @@ package dev.library.backend.config;
 
 import dev.library.backend.security.JwtAuthenticationEntryPoint;
 import dev.library.backend.security.JwtAuthenticationFilter;
+import dev.library.backend.security.JwtGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,37 +18,42 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import dev.library.backend.services.UserService;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
-
-
-    private final JwtAuthenticationEntryPoint jwtAuthEntryPoint;
-    private final UserService userService;
-
+    private final JwtAuthenticationEntryPoint authenticationEntryPoint;
     @Autowired
-    public SecurityConfiguration(UserService userService , JwtAuthenticationEntryPoint jwtAuthEntryPoint) {
-        this.jwtAuthEntryPoint = jwtAuthEntryPoint;
-        this.userService = userService;
+    public SecurityConfiguration(JwtAuthenticationEntryPoint authenticationEntryPoint) {
+        this.authenticationEntryPoint = authenticationEntryPoint;
     }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(register -> {
-                    register.requestMatchers(HttpMethod.GET , "/api/v1/**").permitAll()
-                            .requestMatchers(HttpMethod.GET , "/api/v1/**").permitAll()
-                            .requestMatchers("/api/v1/auth/**").permitAll()
-                            .requestMatchers(HttpMethod.POST, "/api/v1/books/create").hasRole("LIBRARIAN")
-                            .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
-                            .requestMatchers(HttpMethod.POST, "/api/v1/categories/create").hasRole("LIBRARIAN")
-                            .requestMatchers(HttpMethod.POST, "/api/v1/**").authenticated();
-
-                })
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .build();
+         http.csrf(AbstractHttpConfigurer::disable)
+                 .authorizeHttpRequests(
+                         authorizeRequests -> {
+                             authorizeRequests
+                                     .requestMatchers(HttpMethod.POST , "/api/v1/auth/**")
+                                     .permitAll()
+                                     .requestMatchers(HttpMethod.GET , "/api/v1/**").permitAll()
+                                     .requestMatchers(HttpMethod.POST, "/api/v1/books/create").hasRole("LIBRARIAN")
+                                     .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").hasAnyRole("USER", "LIBRARIAN")
+                                     .requestMatchers(HttpMethod.POST, "/api/v1/categories/create").hasRole("LIBRARIAN")
+                                     .requestMatchers(HttpMethod.POST, "/api/v1/**").authenticated()
+                                     .anyRequest().denyAll();
+                         }
+                 )
+                 .exceptionHandling(
+                         exception -> exception.authenticationEntryPoint(authenticationEntryPoint)
+                 )
+                .sessionManagement(
+                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                ).addFilterBefore(
+                         jwtAuthenticationFilter() ,
+                         UsernamePasswordAuthenticationFilter.class
+                 );
+        return http.build();
     }
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -58,7 +64,7 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
     @Bean
-    public JwtAuthenticationFilter authenticationFilter() {
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter();
     }
 }
