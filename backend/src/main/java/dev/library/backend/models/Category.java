@@ -1,5 +1,6 @@
 package dev.library.backend.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -21,8 +22,6 @@ public class Category {
     private Long id;
     @Column(unique = true)
     private String name;
-
     @ManyToMany(mappedBy = "categories")
-    @JsonIgnore
     private Set<Book> books = new HashSet<>();
 }
