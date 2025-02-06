@@ -58,6 +58,7 @@ public class UserService implements UserDetailsService{
     private Collection<GrantedAuthority> mapRolesToAuthorities(Role role) {
         return Collections.singletonList(new SimpleGrantedAuthority(role.name()));
     }
+
     public User create(User user) {
         return this.userRepository.save(user);
     }
