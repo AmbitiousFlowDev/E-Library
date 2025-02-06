@@ -37,13 +37,12 @@ public class SecurityConfiguration {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(register -> {
-                    register.requestMatchers(HttpMethod.POST , "/api/v1/auth/**").permitAll()
-                            .requestMatchers(HttpMethod.GET , "/api/v1/**").permitAll()
-                            .requestMatchers(HttpMethod.POST, "/api/v1/books/create").hasRole("LIBRARIAN")
-                            .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").hasAnyRole("USER", "LIBRARIAN")
-                            .requestMatchers(HttpMethod.POST, "/api/v1/categories/create").hasRole("LIBRARIAN")
-                            .requestMatchers(HttpMethod.POST, "/api/v1/**").authenticated()
-                            .anyRequest().denyAll();
+                    register.requestMatchers(HttpMethod.GET , "/api/v1/**").permitAll();
+//                            .requestMatchers(HttpMethod.GET , "/api/v1/**").permitAll()
+//                            .requestMatchers(HttpMethod.POST, "/api/v1/books/create").hasRole("LIBRARIAN")
+//                            .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
+//                            .requestMatchers(HttpMethod.POST, "/api/v1/categories/create").hasRole("LIBRARIAN")
+//                            .requestMatchers(HttpMethod.POST, "/api/v1/**").authenticated();
 
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
