@@ -1,5 +1,6 @@
 package dev.library.backend.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Table(name = "books")
-public class Book {
+public class Book  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,7 +26,6 @@ public class Book {
 
     @ManyToMany
     @JoinTable(name = "book_category" , joinColumns = @JoinColumn(name="book_id") , inverseJoinColumns = @JoinColumn(name = "category_id"))
-    @JsonManagedReference
     private Set<Category> categories = new HashSet<>();
 
     @JsonIgnore
