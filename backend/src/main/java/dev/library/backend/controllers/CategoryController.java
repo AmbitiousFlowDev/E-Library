@@ -2,6 +2,8 @@ package dev.library.backend.controllers;
 
 import java.util.List;
 
+import dev.library.backend.dto.CategoryDTO;
+import dev.library.backend.services.mappers.CategoryMapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,34 +22,37 @@ import dev.library.backend.services.CategoryService;
 @CrossOrigin 
 @RequestMapping("/api/v1/categories")
 public class CategoryController {
-    @Autowired
+
+    private final CategoryMapperService categoryMapperService;
     private final CategoryService categoryService;
-    public CategoryController(CategoryService categoryService) {
+
+    @Autowired
+    public CategoryController(CategoryService categoryService , CategoryMapperService categoryMapperService) {
+        this.categoryMapperService = categoryMapperService;
         this.categoryService = categoryService;
     }
-
     @GetMapping
-    public List<Category> getCategories() {
-        return categoryService.getCategories(); 
+    public List<CategoryDTO> getCategories() {
+        return this.categoryService.getCategories();
     }
-
     @GetMapping("/{id}")
-    public Category getCategory(@PathVariable("id") Long id) {
-        return categoryService.getCategory(id);
+    public CategoryDTO getCategory(@PathVariable("id") Long id) {
+        return this.categoryService.getCategory(id);
+    }
+    @PostMapping("/create")
+    public CategoryDTO createCategory(@RequestBody CategoryDTO categoryDTO) {
+        Category category = new Category();
+        category.setName(categoryDTO.getName());
+        return this.categoryService.createCategory(categoryDTO);
     }
 
-    @PostMapping
-    public Category createCategory(@RequestBody Category category) {
-        return categoryService.createCategory(category);
+    @PutMapping("/update/{id}")
+    public CategoryDTO updateCategory(@RequestBody CategoryDTO categoryDTO , @PathVariable("id") Long id) {
+        return this.categoryService.updateCategory(id , categoryDTO);
     }
 
-    @PutMapping
-    public Category updateCategory(@RequestBody Category category) {
-        return categoryService.updateCategory(category); 
-    }
-
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteCategory(@PathVariable Long id) {
-        categoryService.deleteCategory(id);
+        this.categoryService.deleteCategory(id);
     }
 }
