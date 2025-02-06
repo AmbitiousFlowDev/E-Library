@@ -1,8 +1,12 @@
 package dev.library.backend.models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,20 +19,10 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(unique = true)
     private String name;
 
-//    @OneToOne(mappedBy = "category")
-//    private Book book;
-
-//    public void addBook(Book book) {
-//        books.add(book);
-//        book.setCategory(this);
-//    }
-//
-//    public void removeBook(Book book) {
-//        books.remove(book);
-//        book.setCategory(null);
-//    }
+    @ManyToMany(mappedBy = "categories")
+    @JsonIgnore
+    private Set<Book> books = new HashSet<>();
 }

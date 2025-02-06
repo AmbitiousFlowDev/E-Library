@@ -1,8 +1,13 @@
 package dev.library.backend.models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,9 +23,12 @@ public class Book {
     private String cover;
     private String title;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    private Category category;
+    @ManyToMany
+    @JoinTable(name = "book_category" , joinColumns = @JoinColumn(name="book_id") , inverseJoinColumns = @JoinColumn(name = "category_id"))
+    @JsonManagedReference
+    private Set<Category> categories = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BorrowRecord> borrowRecords = new ArrayList<>();
 
@@ -28,14 +36,4 @@ public class Book {
     private String description;
     private String isbn;
     private int copies;
-
-    public void addBorrowRecord(BorrowRecord borrowRecord) {
-        borrowRecords.add(borrowRecord);
-        borrowRecord.setBook(this);
-    }
-
-    public void removeBorrowRecord(BorrowRecord borrowRecord) {
-        borrowRecords.remove(borrowRecord);
-        borrowRecord.setBook(null);
-    }
 }
