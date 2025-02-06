@@ -27,23 +27,18 @@ public class UserService implements UserDetailsService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-
     public User getUser(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
     }
-
     public User createUser(User user) {
         return userRepository.save(user);
     }
-
     public User updateUser(User user) {
         if (!userRepository.existsById(user.getId())) {
             throw new EntityNotFoundException("User not found with id: " + user.getId());
         }
         return userRepository.save(user);
     }
-
     public void deleteUser(Long id) {
         if (!userRepository.existsById(id)) {
             throw new EntityNotFoundException("User not found with id: " + id);
@@ -58,7 +53,6 @@ public class UserService implements UserDetailsService {
     private Collection<GrantedAuthority> mapRolesToAuthorities(Role role) {
         return Collections.singletonList(new SimpleGrantedAuthority(role.name()));
     }
-
     public User create(User user) {
         return this.userRepository.save(user);
     }

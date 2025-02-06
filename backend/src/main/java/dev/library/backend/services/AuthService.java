@@ -1,46 +1,47 @@
 package dev.library.backend.services;
 
-import java.nio.file.attribute.UserPrincipal;
-
+import dev.library.backend.dto.AuthResponseDTO;
 import dev.library.backend.models.User;
 import dev.library.backend.models.enums.Role;
 import dev.library.backend.requests.LoginRequest;
 import dev.library.backend.requests.RegisterRequest;
-import jakarta.servlet.http.HttpServletRequest;
+import dev.library.backend.security.JwtGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import jakarta.servlet.http.HttpSession;
 
 @Service
 public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
+    private final JwtGenerator jwtGenerator;
     private final UserService userService;
     @Autowired
-    public AuthService(AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, UserService userService) {
+    public AuthService(
+            AuthenticationManager authenticationManager,
+            PasswordEncoder passwordEncoder,
+            UserService userService ,
+            JwtGenerator jwtGenerator
+    ) {
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
+        this.jwtGenerator = jwtGenerator;
         this.userService = userService;
     }
-    public boolean login(LoginRequest loginRequest , HttpServletRequest httpServletRequest) {
+
+    public AuthResponseDTO login(LoginRequest loginRequest) {
         Authentication authentication = this.authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
-        httpServletRequest.getSession().setAttribute("user", userDetails.getUsername());
-        return true;
+        String token = this.jwtGenerator.generateToken(authentication);
+        return new AuthResponseDTO(token);
     }
+
     public boolean register(RegisterRequest registerRequest) {
         User user = new User();
         if (this.userService.findUser(registerRequest.getUsername()) != null) {
