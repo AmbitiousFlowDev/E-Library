@@ -18,7 +18,7 @@ import dev.library.backend.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class UserService implements UserDetailsService{
+public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     @Autowired
     public UserService(UserRepository userRepository) {

@@ -1,13 +1,12 @@
 package dev.library.backend.controllers;
 
 import dev.library.backend.dto.BookDTO;
-import dev.library.backend.dto.mappers.BookMapper;
 import dev.library.backend.models.Book;
 import dev.library.backend.repositories.BookRepository;
 import dev.library.backend.services.BookService;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,15 +26,8 @@ public class BookController {
     }
 
     @GetMapping("/")
-    public List<BookDTO> getBooks() {
-        try {
-            List<BookDTO> result = this.bookRepository.findAll().stream().map(BookMapper::toBookDTO).collect(Collectors.toList());
-            System.out.println(result);
-            return result;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
+    public ResponseEntity<List<BookDTO>> getBooks() {
+        return new ResponseEntity<>(this.bookService.getBooks(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
