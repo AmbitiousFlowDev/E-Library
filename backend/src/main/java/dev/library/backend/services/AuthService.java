@@ -1,10 +1,10 @@
 package dev.library.backend.services;
 
-import dev.library.backend.dto.AuthResponseDTO;
+import dev.library.backend.dto.response.AuthResponseDTO;
 import dev.library.backend.models.User;
 import dev.library.backend.models.enums.Role;
-import dev.library.backend.requests.LoginRequest;
-import dev.library.backend.requests.RegisterRequest;
+import dev.library.backend.dto.requests.LoginRequestDTO;
+import dev.library.backend.dto.requests.RegisterRequestDTO;
 import dev.library.backend.security.JwtGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,24 +33,24 @@ public class AuthService {
         this.userService = userService;
     }
 
-    public AuthResponseDTO login(LoginRequest loginRequest) {
+    public AuthResponseDTO login(LoginRequestDTO loginRequestDTO) {
         Authentication authentication = this.authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+                new UsernamePasswordAuthenticationToken(loginRequestDTO.getUsername(), loginRequestDTO.getPassword())
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = this.jwtGenerator.generateToken(authentication);
         return new AuthResponseDTO(token);
     }
 
-    public boolean register(RegisterRequest registerRequest) {
+    public boolean register(RegisterRequestDTO registerRequestDTO) {
         User user = new User();
-        if (this.userService.findUser(registerRequest.getUsername()) != null) {
+        if (this.userService.findUser(registerRequestDTO.getUsername()) != null) {
             return false;
         }
-        user.setUsername(registerRequest.getUsername());
-        user.setFullName(registerRequest.getFullName());
-        user.setEmail(registerRequest.getEmail());
-        user.setPassword(this.passwordEncoder.encode(registerRequest.getPassword()));
+        user.setUsername(registerRequestDTO.getUsername());
+        user.setFullName(registerRequestDTO.getFullName());
+        user.setEmail(registerRequestDTO.getEmail());
+        user.setPassword(this.passwordEncoder.encode(registerRequestDTO.getPassword()));
         user.setRole(Role.USER);
         this.userService.create(user);
         return true;

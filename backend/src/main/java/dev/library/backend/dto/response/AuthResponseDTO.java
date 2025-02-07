@@ -1,4 +1,4 @@
-package dev.library.backend.dto;
+package dev.library.backend.dto.response;
 
 import lombok.Data;
 
