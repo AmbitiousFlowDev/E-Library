@@ -1,6 +1,7 @@
 package dev.library.backend.config.security;
 
 import dev.library.backend.config.security.constants.SecurityConstants;
+import dev.library.backend.models.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -37,7 +38,12 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
     public String generateToken(UserDetails userDetails) {
-        return this.generateToken(new HashMap<>() , userDetails);
+        if (userDetails instanceof User user) {
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("role" , user.getRole());
+            return this.generateToken(claims , userDetails);
+        }
+        return this.generateToken(new HashMap<>(), userDetails);
     }
     public String generateToken(Map<String , Object> extractClaims , UserDetails userDetails) {
         return Jwts
