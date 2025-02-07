@@ -1,6 +1,6 @@
 package dev.library.backend.controllers;
 
-import dev.library.backend.dto.AuthResponseDTO;
+import dev.library.backend.dto.response.AuthResponseDTO;
 import dev.library.backend.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.library.backend.requests.LoginRequest;
-import dev.library.backend.requests.RegisterRequest;
+import dev.library.backend.dto.requests.LoginRequestDTO;
+import dev.library.backend.dto.requests.RegisterRequestDTO;
 
 @RestController
 @CrossOrigin
@@ -24,16 +24,16 @@ public class AuthController {
        this.authService = authService;
     }
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) {
-        boolean result = this.authService.register(registerRequest);
+    public ResponseEntity<String> register(@RequestBody RegisterRequestDTO registerRequestDTO) {
+        boolean result = this.authService.register(registerRequestDTO);
         if (!result) {
             return new ResponseEntity<>("Registration error", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>("Registration successful", HttpStatus.OK);
     }
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginRequest loginRequest) {
-        AuthResponseDTO result = this.authService.login(loginRequest);
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
+        AuthResponseDTO result = this.authService.login(loginRequestDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

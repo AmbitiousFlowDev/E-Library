@@ -1,5 +1,6 @@
 package dev.library.backend.models;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -20,7 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor
 @Data
 @Table(name = "users")
-public class User implements UserDetails {
+public class User implements UserDetails , Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

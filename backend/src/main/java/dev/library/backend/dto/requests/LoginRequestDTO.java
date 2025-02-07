@@ -1,9 +1,9 @@
-package dev.library.backend.requests;
+package dev.library.backend.dto.requests;
 
 import lombok.Data;
 
 @Data
-public class LoginRequest {
+public class LoginRequestDTO {
     private String username;
     private String password;
 }

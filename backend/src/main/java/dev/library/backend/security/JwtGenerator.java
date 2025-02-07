@@ -1,9 +1,7 @@
 package dev.library.backend.security;
 
 import dev.library.backend.constants.SecurityConstants;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -25,8 +23,12 @@ public class JwtGenerator {
         try {
             Jwts.parser().setSigningKey(SecurityConstants.JWT_SECRET).parseClaimsJws(token);
             return true;
+        } catch (ExpiredJwtException e) {
+            throw new AuthenticationCredentialsNotFoundException("JWT token has expired");
+        } catch (SignatureException | MalformedJwtException e) {
+            throw new AuthenticationCredentialsNotFoundException("Invalid JWT token");
         } catch (Exception e) {
-            throw new AuthenticationCredentialsNotFoundException("JWT token not found");
+            throw new AuthenticationCredentialsNotFoundException("JWT token verification failed");
         }
     }
 }
