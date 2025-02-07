@@ -49,7 +49,7 @@ public class JwtService {
                 .signWith(getSignInKey() , SignatureAlgorithm.HS256)
                 .compact();
     }
-    public boolean validateToken(String token, UserDetails userDetails) {
+    public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = this.extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
