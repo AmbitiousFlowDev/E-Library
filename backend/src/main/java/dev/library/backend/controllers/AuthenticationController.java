@@ -21,13 +21,12 @@ public class AuthenticationController {
     public AuthenticationController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
-
-    @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponseDto> register(@RequestBody RegisterRequestDto request) {
-        return ResponseEntity.ok(this.authenticationService.register(request));
-    }
-    @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponseDto> authenticate(@RequestBody AuthenticationRequestDto request) {
-        return ResponseEntity.ok(this.authenticationService.authenticate(request));
-    }
+//    @PostMapping("/register")
+//    public ResponseEntity<AuthenticationResponseDto> register(@RequestBody RegisterRequestDto request) {
+//        return ResponseEntity.ok(this.authenticationService.register(request));
+//    }
+//    @PostMapping("/authenticate")
+//    public ResponseEntity<AuthenticationResponseDto> authenticate(@RequestBody AuthenticationRequestDto request) {
+//        return ResponseEntity.ok(this.authenticationService.authenticate(request));
+//    }
 }
