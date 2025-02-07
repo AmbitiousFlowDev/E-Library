@@ -1,6 +1,10 @@
 package dev.library.backend.constants;
 
+import java.util.Date;
+
 public final class SecurityConstants {
-    public static long JWT_TOKEN_EXPIRATION_TIME = 9000;
-    public static String JWT_SECRET = "01ceb2347bd4babc2485ba09f8c4bcccf1c71d7533ab7583b5e3508fe787c2ac1c4e703b16d9a31e7f35db33b9ea9fcb7abf616122346bc4adb3869f1b3021ff60f84d6b8cdda3974351437a49017275f63076900266baa98f8ca2f35522fc8e56e529d0868905bcf36f25bb43ddadd04e24a99a6d0f1fb7c90ea3b70d1d82dba898723d2a7734914391c48fb6c61cb96f042aabefc7e6116698ad9e65abafb156b07177b60762c790ba8098db6f09951174edaf79538a153e084d35b7f0d8074bc7ee4343bd116af225cf8864ae97b7a2c656a6d436a05ed260071116e3132a6340d53f75443ef55d18023ca5f06db2d8b2f92d147b5a28d233e686b99ef303";
+    public static long JWT_EXPIRATION = 9000;
+    public static Date JWT_ISSUED_AT = new Date(System.currentTimeMillis());
+    public static String JWT_SECRET = "acaca1497b7fdf6da8140aa9665c66528da21295e765d8a418b23b6990e1ca29";
+    public static Date JWT_EXPIRATION_DATE = new Date(System.currentTimeMillis() + JWT_EXPIRATION);
 }
