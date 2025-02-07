@@ -1,6 +1,6 @@
 package dev.library.backend.config.security;
 
-import dev.library.backend.constants.SecurityConstants;
+import dev.library.backend.config.security.constants.SecurityConstants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

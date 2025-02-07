@@ -1,4 +1,4 @@
-package dev.library.backend.constants;
+package dev.library.backend.config.security.constants;
 
 import java.util.Date;
 

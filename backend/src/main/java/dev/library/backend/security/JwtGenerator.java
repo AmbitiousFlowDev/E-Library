@@ -1,6 +1,6 @@
 package dev.library.backend.security;
 
-import dev.library.backend.constants.SecurityConstants;
+import dev.library.backend.config.security.constants.SecurityConstants;
 import io.jsonwebtoken.*;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
