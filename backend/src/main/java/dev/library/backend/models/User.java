@@ -19,6 +19,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
@@ -37,7 +39,7 @@ public class User implements UserDetails {
     private Role role;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.toString()));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.toString()));
     }
     @Override
     public String getUsername() {
