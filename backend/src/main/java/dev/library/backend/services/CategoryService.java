@@ -3,7 +3,8 @@ package dev.library.backend.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import dev.library.backend.dto.CategoryDTO;
+import dev.library.backend.dto.requests.CategoryRequestDto;
+import dev.library.backend.dto.response.CategoryResponseDto;
 import dev.library.backend.services.mappers.CategoryMapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,28 +21,32 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
         this.categoryMapperService = categoryMapperService;
     }
-    public List<CategoryDTO> getCategories() {
-        return this.categoryRepository.findAll().stream().map(this.categoryMapperService::toCategoryDTO).collect(Collectors.toList());
+    public List<CategoryResponseDto> getCategories() {
+        return this.categoryRepository
+                .findAll()
+                .stream()
+                .map(this.categoryMapperService::toCategoryDTO)
+                .collect(Collectors.toList());
     }
-    public CategoryDTO getCategory(Long id) {
+    public CategoryResponseDto getCategory(Long id) {
         if (this.categoryRepository.existsById(id)) {
             Category category = this.categoryRepository.findById(id).orElseThrow();
             return this.categoryMapperService.toCategoryDTO(category);
         }
         return null;
     }
-    public CategoryDTO createCategory(CategoryDTO categoryDTO) {
+    public CategoryResponseDto createCategory(CategoryRequestDto request) {
         Category category = new Category();
-        category.setName(categoryDTO.getName());
+        category.setName(request.getName());
         this.categoryRepository.save(category);
         return this.categoryMapperService.toCategoryDTO(category);
     }
-    public CategoryDTO updateCategory(Long id, CategoryDTO categoryDTO) {
+    public CategoryResponseDto updateCategory(Long id, CategoryRequestDto request) {
         if (!this.categoryRepository.existsById(id)) {
-            return null;
+            throw new EntityNotFoundException("Category not found with ID: " + id);
         }
         Category category = this.categoryRepository.findById(id).orElseThrow();
-        category.setName(categoryDTO.getName());
+        category.setName(request.getName());
         return this.categoryMapperService.toCategoryDTO(this.categoryRepository.save(category));
     }
     public void deleteCategory(Long id) {
