@@ -21,9 +21,10 @@ public class Book implements Serializable {
     private String cover;
     private String title;
 
-    @ManyToMany
-    @JoinTable(name = "book_category" , joinColumns = @JoinColumn(name="book_id") , inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories = Collections.unmodifiableSet(new HashSet<>());
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "book_category", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+    @JsonManagedReference
+    private Set<Category> categories = new HashSet<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
