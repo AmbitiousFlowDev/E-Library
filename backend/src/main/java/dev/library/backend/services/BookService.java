@@ -20,10 +20,12 @@ import java.util.stream.Collectors;
 @Service
 public class BookService {
     private final BookMapperService bookResponseMapperService;
+    private final FileUploadService fileUploadService;
     private final BookRepository bookRepository;
     @Autowired
-    public BookService(BookRepository bookRepository , BookMapperService bookResponseMapperService) {
+    public BookService(BookRepository bookRepository , BookMapperService bookResponseMapperService , FileUploadService fileUploadService) {
         this.bookResponseMapperService = bookResponseMapperService;
+        this.fileUploadService = fileUploadService;
         this.bookRepository = bookRepository;
     }
     public Page<BookResponseDto> getBooks(int page , int size , String sortBy , String direction)
@@ -33,32 +35,12 @@ public class BookService {
         Page<Book> books = this.bookRepository.findAll(pageable);
         return books.map(this.bookResponseMapperService::toDataTransferObject);
     }
-    public BookResponseDto getBook(Long id) {
+    public BookResponseDto getBook(Long id)
+    {
         Book book = this.bookRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         return this.bookResponseMapperService.toDataTransferObject(book);
     }
-//    public BookResponseDto createBook(BookRequestDto request) {
-//        Book book = new Book();
-//
-//        book.setAuthor(request.getAuthor());
-//        book.setCover(request.getCover());
-//        book.setIsbn(request.getIsbn());
-//        book.setCopies(request.getCopies());
-//
-//        Set<Category> categories = request.getCategories().stream().map(category -> this.categoryService.getCategory(category));
-//
-//        return this.bookResponseMapperService.toBookDto(this.bookRepository.save(book));
-//    }
-//    public Book updateBook(Book book) {
-//        if (!this.bookRepository.existsById(book.getId())) {
-//            throw new EntityNotFoundException("Book not found with ID: " + book.getId());
-//        }
-//        return this.bookRepository.save(book);
-//    }
-//    public void deleteBook(Long id) {
-//        if (!this.bookRepository.existsById(id)) {
-//            throw new RuntimeException("Cannot delete: Book not found with ID: " + id);
-//        }
-//        this.bookRepository.deleteById(id);
-//    }
+    public BookResponseDto createBook() {
+        // null
+    }
 }
