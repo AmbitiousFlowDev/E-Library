@@ -50,8 +50,8 @@ public class JwtService {
                 .builder()
                 .setClaims(extractClaims)
                 .setSubject(userDetails.getUsername())
-                .setIssuedAt(SecurityConstants.JWT_ISSUED_AT)
-                .setExpiration(SecurityConstants.JWT_EXPIRATION_DATE)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.JWT_EXPIRATION))
                 .signWith(getSignInKey() , SignatureAlgorithm.HS256)
                 .compact();
     }

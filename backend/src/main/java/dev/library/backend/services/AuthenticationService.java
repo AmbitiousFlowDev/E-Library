@@ -21,8 +21,11 @@ public class AuthenticationService {
     private final JwtService jwtService;
     @Autowired
     public AuthenticationService(
-            UserRepository userRepository,PasswordEncoder passwordEncoder,
-            AuthenticationManager authenticationManager,JwtService jwtService)
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder,
+            AuthenticationManager authenticationManager,
+            JwtService jwtService
+    )
     {
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
@@ -40,6 +43,6 @@ public class AuthenticationService {
                 new UsernamePasswordAuthenticationToken(request.getUsername() , request.getPassword())
         );
         User user = this.userRepository.findByUsername(request.getUsername());
-        return AuthenticationResponseDto.builder().token(jwtService.generateToken(user)).build();
+        return AuthenticationResponseDto.builder().token(this.jwtService.generateToken(user)).build();
     }
 }

@@ -1,9 +1,12 @@
 package dev.library.backend.controllers;
 
 import dev.library.backend.dto.mappers.BookMapperService;
+import dev.library.backend.dto.requests.BookRequestDto;
 import dev.library.backend.dto.response.BookResponseDto;
 import dev.library.backend.models.Book;
 import dev.library.backend.repositories.BookRepository;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,8 +14,11 @@ import dev.library.backend.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/v1/books")
@@ -33,11 +39,15 @@ public class BookController {
     public ResponseEntity<BookResponseDto> getBook(@PathVariable Long id) {
         return new ResponseEntity<>(bookService.getBook(id), HttpStatus.OK);
     }
-//    @PreAuthorize("hasRole('LIBRARIAN')")
-//    @PostMapping("/create")
-//    public ResponseEntity<Book> createBook(@RequestBody Book book) {
-//        return new ResponseEntity<>(this.bookService.createBook(book) , HttpStatus.OK);
-//    }
+    @GetMapping("/search={search}")
+    public ResponseEntity<List<BookResponseDto>> getBookBySearch(@PathVariable String search) {
+        return new ResponseEntity<>(this.bookService.getBooksBySearch(search), HttpStatus.OK);
+    }
+    @PreAuthorize("hasRole('LIBRARIAN')")
+    @PostMapping(value = "/create" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<BookResponseDto> createBook(@RequestBody BookRequestDto bookRequestDto) throws IOException {
+        return new ResponseEntity<>(this.bookService.createBook(bookRequestDto) , HttpStatus.CREATED);
+    }
 //    @PreAuthorize("hasRole('LIBRARIAN')")
 //    @PutMapping("/update/{id}")
 //    public Book updateBook( @RequestBody Book book) {
