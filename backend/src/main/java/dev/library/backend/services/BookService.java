@@ -1,21 +1,21 @@
 package dev.library.backend.services;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import dev.library.backend.dto.BookDTO;
 import dev.library.backend.dto.mappers.BookMapperService;
-import dev.library.backend.dto.requests.BookRequestDto;
 import dev.library.backend.dto.response.BookResponseDto;
-import dev.library.backend.models.Category;
-import jakarta.transaction.Transactional;
+import dev.library.backend.models.Book;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import jakarta.persistence.EntityNotFoundException;
-import dev.library.backend.models.Book;
 import dev.library.backend.repositories.BookRepository;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -26,17 +26,22 @@ public class BookService {
         this.bookResponseMapperService = bookResponseMapperService;
         this.bookRepository = bookRepository;
     }
-//    public List<Book> getBooks() {
-//       List<Book> books = this.bookRepository.findAll();
-//       return this.bookResponseMapperService.fromEntities(books);
-//    }
-//    public BookResponseDto getBook(Long id) {
-//        if (this.bookRepository.existsById(id)) {
-//            Book book = this.bookRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-//            return this.bookResponseMapperService.toBookDto(book);
-//        }
-//        return null;
-//    }
+    public Page<BookResponseDto> getBooks(
+            @RequestParam(defaultValue = "0") int page ,
+            @RequestParam(defaultValue = "10") int size ,
+            @RequestParam(defaultValue = "title") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction
+    )
+    {
+        Sort sort = direction.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<Book> books = this.bookRepository.findAll(pageable);
+        return books.map(this.bookResponseMapperService::toDataTransferObject);
+    }
+    public BookResponseDto getBook(Long id) {
+        Book book = this.bookRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return this.bookResponseMapperService.toDataTransferObject(book);
+    }
 //    public BookResponseDto createBook(BookRequestDto request) {
 //        Book book = new Book();
 //
