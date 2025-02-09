@@ -1,5 +1,6 @@
 package dev.library.backend.dto.requests;
 
+import dev.library.backend.models.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +19,5 @@ public class BookRequestDto {
     private String description;
     private String isbn;
     private int copies;
-    private Set<Long> categories;
+    private Long categoryId;
 }

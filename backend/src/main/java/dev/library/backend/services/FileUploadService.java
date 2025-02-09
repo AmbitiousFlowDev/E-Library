@@ -17,7 +17,7 @@ public class FileUploadService {
     public FileUploadService(StaticResourceService staticResourceService) {
         this.staticResourceService = staticResourceService;
     }
-    private String uploadFile(MultipartFile file) throws IOException {
+    public String uploadFile(MultipartFile file) throws IOException {
         Path uploadPath = Paths.get(this.staticResourceService.getStaticResourcePathString());
         if (!Files.exists(uploadPath))
         {
@@ -28,7 +28,7 @@ public class FileUploadService {
         Files.copy(file.getInputStream(), path);
         return fileName;
     }
-    private String randomFileName(MultipartFile file) {
+    public String randomFileName(MultipartFile file) {
         return UUID.randomUUID() + "." + file.getOriginalFilename();
     }
 }
