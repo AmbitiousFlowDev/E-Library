@@ -21,10 +21,8 @@ public class Book implements Serializable {
     private String cover;
     private String title;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "book_category", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-    @JsonManagedReference
-    private Set<Category> categories = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Category category;
 
     @JsonIgnore
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)

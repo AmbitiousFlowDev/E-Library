@@ -18,5 +18,5 @@ public class BookResponseDto {
     private String description;
     private String isbn;
     private int copies;
-    private Set<CategoryResponseDto> categories;
+    private String category;
 }
