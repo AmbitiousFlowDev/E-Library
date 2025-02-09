@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import dev.library.backend.dto.requests.CategoryRequestDto;
 import dev.library.backend.dto.response.CategoryResponseDto;
-import dev.library.backend.services.mappers.CategoryMapperService;
+import dev.library.backend.dto.mappers.CategoryMapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,13 +25,13 @@ public class CategoryService {
         return this.categoryRepository
                 .findAll()
                 .stream()
-                .map(this.categoryMapperService::toCategoryDTO)
+                .map(this.categoryMapperService::toDataTransferObject)
                 .collect(Collectors.toList());
     }
     public CategoryResponseDto getCategory(Long id) {
         if (this.categoryRepository.existsById(id)) {
             Category category = this.categoryRepository.findById(id).orElseThrow();
-            return this.categoryMapperService.toCategoryDTO(category);
+            return this.categoryMapperService.toDataTransferObject(category);
         }
         return null;
     }
@@ -39,7 +39,7 @@ public class CategoryService {
         Category category = new Category();
         category.setName(request.getName());
         this.categoryRepository.save(category);
-        return this.categoryMapperService.toCategoryDTO(category);
+        return this.categoryMapperService.toDataTransferObject(category);
     }
     public CategoryResponseDto updateCategory(Long id, CategoryRequestDto request) {
         if (!this.categoryRepository.existsById(id)) {
@@ -47,7 +47,7 @@ public class CategoryService {
         }
         Category category = this.categoryRepository.findById(id).orElseThrow();
         category.setName(request.getName());
-        return this.categoryMapperService.toCategoryDTO(this.categoryRepository.save(category));
+        return this.categoryMapperService.toDataTransferObject(this.categoryRepository.save(category));
     }
     public void deleteCategory(Long id) {
         if (this.getCategory(id) == null) {

@@ -5,6 +5,8 @@ import java.util.List;
 import dev.library.backend.dto.requests.CategoryRequestDto;
 import dev.library.backend.dto.response.CategoryResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,26 +30,30 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
     @GetMapping("/")
-    public List<CategoryResponseDto> getCategories() {
-        return this.categoryService.getCategories();
+    public ResponseEntity<List<CategoryResponseDto>> getCategories() {
+        return new ResponseEntity<>(this.categoryService.getCategories(), HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    public CategoryResponseDto getCategory(@PathVariable("id") Long id) {
-        return this.categoryService.getCategory(id);
+    public ResponseEntity<CategoryResponseDto> getCategory(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(this.categoryService.getCategory(id), HttpStatus.OK);
     }
     @PreAuthorize("hasRole('LIBRARIAN')")
     @PostMapping("/create")
-    public CategoryResponseDto createCategory(@RequestBody CategoryRequestDto request) {;
-        return this.categoryService.createCategory(request);
+    public ResponseEntity<CategoryResponseDto> createCategory(@RequestBody CategoryRequestDto request) {;
+        return new ResponseEntity<>(this.categoryService.createCategory(request), HttpStatus.CREATED);
     }
     @PreAuthorize("hasRole('LIBRARIAN')")
     @PutMapping("/update/{id}")
-    public CategoryResponseDto updateCategory(@RequestBody CategoryRequestDto request, @PathVariable("id") Long id) {
-        return this.categoryService.updateCategory(id , request);
+    public ResponseEntity<CategoryResponseDto> updateCategory(@RequestBody CategoryRequestDto request, @PathVariable("id") Long id) {
+        if (this.categoryService.getCategory(id) == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(this.categoryService.updateCategory(id,request) , HttpStatus.OK);
     }
     @PreAuthorize("hasRole('LIBRARIAN')")
     @DeleteMapping("/delete/{id}")
-    public void deleteCategory(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
         this.categoryService.deleteCategory(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

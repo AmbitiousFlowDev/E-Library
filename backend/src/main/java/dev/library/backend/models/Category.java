@@ -23,5 +23,6 @@ public class Category implements Serializable  {
     @Column(unique = true)
     private String name;
     @ManyToMany(mappedBy = "categories")
+    @JsonBackReference
     private Set<Book> books = new HashSet<>();
 }
