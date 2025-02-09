@@ -26,12 +26,7 @@ public class BookService {
         this.bookResponseMapperService = bookResponseMapperService;
         this.bookRepository = bookRepository;
     }
-    public Page<BookResponseDto> getBooks(
-            @RequestParam(defaultValue = "0") int page ,
-            @RequestParam(defaultValue = "10") int size ,
-            @RequestParam(defaultValue = "title") String sortBy,
-            @RequestParam(defaultValue = "asc") String direction
-    )
+    public Page<BookResponseDto> getBooks(int page , int size , String sortBy , String direction)
     {
         Sort sort = direction.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
