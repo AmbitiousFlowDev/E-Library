@@ -5,7 +5,7 @@
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
 ![SonarQube](https://img.shields.io/badge/SonarQube-4E9BCD?style=for-the-badge&logo=sonarqube&logoColor=white)
 
-This project is an advanced library management system designed to streamline library operations, including book search, reservations, user management, and more. The backend is built using **Spring Boot**, and the frontend is developed with **React**. Below is an overview of the project structure, features, and setup instructions.
+**This project is an advanced library management system designed to streamline library operations, including book search, reservations, user management, and more. The backend is built using **Spring Boot**, and the frontend is developed with **React**. Below is an overview of the project structure, features, and setup instructions.**
 
 ## Table of Contents
 1. [Project Overview](#project-overview)
