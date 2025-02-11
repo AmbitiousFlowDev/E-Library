@@ -4,6 +4,7 @@ import dev.library.backend.dto.mappers.BookMapperService;
 import dev.library.backend.dto.requests.BookRequestDto;
 import dev.library.backend.dto.response.BookResponseDto;
 import dev.library.backend.models.Book;
+import dev.library.backend.models.Category;
 import dev.library.backend.repositories.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,16 +48,24 @@ public class BookService {
         return this.bookResponseMapperService.toDataTransferObject(book);
     }
     public BookResponseDto createBook(BookRequestDto bookRequestDto , MultipartFile file) throws IOException {
-        Book book = new Book();
-        String cover = this.fileUploadService.uploadFile(file);
-        book.setAuthor(bookRequestDto.getAuthor());
-        book.setTitle(bookRequestDto.getTitle());
-        book.setIsbn(bookRequestDto.getIsbn());
-        book.setCopies(bookRequestDto.getCopies());
-        book.setCover(cover);
-        book.setCategory(this.categoryRepository.findById(bookRequestDto.getCategoryId()).orElseThrow(EntityNotFoundException::new));
-        return this.bookResponseMapperService
-                .toDataTransferObject(this.bookRepository.save(book));
+        try {
+            Book book = new Book();
+            Category category = this.categoryRepository.findById(bookRequestDto.getCategoryId()).orElseThrow(EntityNotFoundException::new);
+            System.out.println(category);
+            String cover = this.fileUploadService.uploadFile(file);
+            book.setAuthor(bookRequestDto.getAuthor());
+            book.setTitle(bookRequestDto.getTitle());
+            book.setIsbn(bookRequestDto.getIsbn());
+            book.setCopies(bookRequestDto.getCopies());
+            book.setCover(cover);
+            book.setCategory(category);
+            return this.bookResponseMapperService.toDataTransferObject(this.bookRepository.save(book));
+        } catch (Exception e) {
+            System.out.println("Exception : " + e.getMessage());
+            System.out.println("Caused By : " + e.getCause());
+            System.out.println(bookRequestDto);
+            return null;
+        }
     }
     public List<BookResponseDto> getBooksBySearch(String search) {
         return this.bookResponseMapperService
