@@ -46,19 +46,20 @@ public class BookService {
         Book book = this.bookRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         return this.bookResponseMapperService.toDataTransferObject(book);
     }
-    public BookResponseDto createBook(BookRequestDto bookRequestDto) {
+    public BookResponseDto createBook(BookRequestDto bookRequestDto , MultipartFile file) throws IOException {
         Book book = new Book();
+        String cover = this.fileUploadService.uploadFile(file);
         book.setAuthor(bookRequestDto.getAuthor());
         book.setTitle(bookRequestDto.getTitle());
         book.setIsbn(bookRequestDto.getIsbn());
         book.setCopies(bookRequestDto.getCopies());
-        book.setCover(null);
-        book.setCategory(
-                this.categoryRepository.findById(bookRequestDto.getCategoryId()).orElseThrow(EntityNotFoundException::new)
-        );
-        return this.bookResponseMapperService.toDataTransferObject(this.bookRepository.save(book));
+        book.setCover(cover);
+        book.setCategory(this.categoryRepository.findById(bookRequestDto.getCategoryId()).orElseThrow(EntityNotFoundException::new));
+        return this.bookResponseMapperService
+                .toDataTransferObject(this.bookRepository.save(book));
     }
     public List<BookResponseDto> getBooksBySearch(String search) {
-        return this.bookResponseMapperService.toDataTransferObjects(this.bookRepository.searchBooks(search));
+        return this.bookResponseMapperService
+                .toDataTransferObjects(this.bookRepository.searchBooks(search));
     }
 }
