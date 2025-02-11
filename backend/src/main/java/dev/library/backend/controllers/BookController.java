@@ -45,8 +45,16 @@ public class BookController {
     }
     @PreAuthorize("hasRole('LIBRARIAN')")
     @PostMapping(value = "/create" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<BookResponseDto> createBook(@RequestBody BookRequestDto bookRequestDto) throws IOException {
-        return new ResponseEntity<>(this.bookService.createBook(bookRequestDto) , HttpStatus.CREATED);
+    public ResponseEntity<BookResponseDto> createBook(
+            @RequestPart("bookRequestDto") BookRequestDto bookRequestDto ,
+            @RequestPart("file") MultipartFile file
+    ) throws IOException {
+
+        if (file.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(this.bookService.createBook(bookRequestDto , file) , HttpStatus.CREATED);
     }
 //    @PreAuthorize("hasRole('LIBRARIAN')")
 //    @PutMapping("/update/{id}")
