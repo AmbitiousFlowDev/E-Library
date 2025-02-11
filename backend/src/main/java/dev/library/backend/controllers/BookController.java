@@ -46,7 +46,7 @@ public class BookController {
     @PreAuthorize("hasRole('LIBRARIAN')")
     @PostMapping(value = "/create" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<BookResponseDto> createBook(
-            @RequestPart("bookRequestDto") BookRequestDto bookRequestDto ,
+            @ModelAttribute BookRequestDto bookRequestDto ,
             @RequestPart("file") MultipartFile file
     ) throws IOException {
 
