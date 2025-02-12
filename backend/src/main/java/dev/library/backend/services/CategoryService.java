@@ -22,14 +22,11 @@ public class CategoryService {
         this.categoryMapperService = categoryMapperService;
     }
     public List<CategoryResponseDto> getCategories() {
-        return this.categoryRepository
-                .findAll()
-                .stream()
-                .map(this.categoryMapperService::toDataTransferObject)
-                .collect(Collectors.toList());
+        return this.categoryRepository.findAll().stream().map(this.categoryMapperService::toDataTransferObject).collect(Collectors.toList());
     }
     public CategoryResponseDto getCategory(Long id) {
-        if (this.categoryRepository.existsById(id)) {
+        if (this.categoryRepository.existsById(id))
+        {
             Category category = this.categoryRepository.findById(id).orElseThrow();
             return this.categoryMapperService.toDataTransferObject(category);
         }
