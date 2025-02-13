@@ -2,7 +2,6 @@ package dev.library.backend.services;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import dev.library.backend.dto.requests.CategoryRequestDto;
 import dev.library.backend.dto.response.CategoryResponseDto;
 import dev.library.backend.dto.mappers.CategoryMapperService;
@@ -17,14 +16,17 @@ public class CategoryService {
     private final CategoryMapperService categoryMapperService;
     private final CategoryRepository categoryRepository;
     @Autowired
-    public CategoryService(CategoryRepository categoryRepository , CategoryMapperService categoryMapperService) {
+    public CategoryService(CategoryRepository categoryRepository , CategoryMapperService categoryMapperService)
+    {
         this.categoryRepository = categoryRepository;
         this.categoryMapperService = categoryMapperService;
     }
-    public List<CategoryResponseDto> getCategories() {
+    public List<CategoryResponseDto> getCategories()
+    {
         return this.categoryRepository.findAll().stream().map(this.categoryMapperService::toDataTransferObject).collect(Collectors.toList());
     }
-    public CategoryResponseDto getCategory(Long id) {
+    public CategoryResponseDto getCategory(Long id)
+    {
         if (this.categoryRepository.existsById(id))
         {
             Category category = this.categoryRepository.findById(id).orElseThrow();
@@ -32,13 +34,15 @@ public class CategoryService {
         }
         return null;
     }
-    public CategoryResponseDto createCategory(CategoryRequestDto request) {
+    public CategoryResponseDto createCategory(CategoryRequestDto request)
+    {
         Category category = new Category();
         category.setName(request.getName());
         this.categoryRepository.save(category);
         return this.categoryMapperService.toDataTransferObject(category);
     }
-    public CategoryResponseDto updateCategory(Long id, CategoryRequestDto request) {
+    public CategoryResponseDto updateCategory(Long id, CategoryRequestDto request)
+    {
         if (!this.categoryRepository.existsById(id)) {
             throw new EntityNotFoundException("Category not found with ID: " + id);
         }
@@ -46,7 +50,8 @@ public class CategoryService {
         category.setName(request.getName());
         return this.categoryMapperService.toDataTransferObject(this.categoryRepository.save(category));
     }
-    public void deleteCategory(Long id) {
+    public void deleteCategory(Long id)
+    {
         if (this.getCategory(id) == null) {
             throw new EntityNotFoundException("Category not found with ID: " + id);
         }
