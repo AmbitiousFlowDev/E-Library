@@ -22,33 +22,37 @@ import dev.library.backend.services.UserService;
 public class UserController {
     public final UserService userService;
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService)
+    {
         this.userService = userService;
     }
-    @GetMapping
-    public List<User> getAllUsers() {
+    @GetMapping("/")
+    public List<User> getAllUsers()
+    {
         return userService.getAllUsers();
     }
-
     @GetMapping("/{id}")
-    public User getUser(@PathVariable Long id) {
+    public User getUser(@PathVariable Long id)
+    {
         return userService.getUser(id);
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
+    public User createUser(@RequestBody User user)
+    {
         return userService.createUser(user);
     }
 
     @PutMapping
-    public User updateUser(@RequestBody User user) {
+    public User updateUser(@RequestBody User user)
+    {
         return userService.updateUser(user);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable("id") Long id) {
+    public void deleteUser(@PathVariable("id") Long id)
+    {
         userService.deleteUser(id);
-        ;
     }
 //    @GetMapping("/{username}")
 //    public User showUser(@PathVariable String username) {
