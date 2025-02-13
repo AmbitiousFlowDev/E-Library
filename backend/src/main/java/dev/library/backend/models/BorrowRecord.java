@@ -1,17 +1,10 @@
 package dev.library.backend.models;
 
-import java.io.ObjectInputFilter.Status;
 import java.io.Serializable;
 import java.sql.Date;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import dev.library.backend.models.enums.Status;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,8 +19,10 @@ public class BorrowRecord implements Serializable {
     private Date borrowDate;
     private Date returnDate;
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne
+    @JoinColumn(name = "book_id")
     private Book book;
     @Enumerated(EnumType.STRING)
     private Status status;
