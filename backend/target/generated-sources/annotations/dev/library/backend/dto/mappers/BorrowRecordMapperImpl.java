@@ -4,16 +4,19 @@ import dev.library.backend.dto.response.BorrowRecordResponseDto;
 import dev.library.backend.models.Book;
 import dev.library.backend.models.BorrowRecord;
 import dev.library.backend.models.User;
-import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-02-12T23:47:45+0100",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.12 (Oracle Corporation)"
+    date = "2025-02-13T15:03:02+0100",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.13 (Amazon.com Inc.)"
 )
 @Component
 public class BorrowRecordMapperImpl implements BorrowRecordMapper {
@@ -30,10 +33,10 @@ public class BorrowRecordMapperImpl implements BorrowRecordMapper {
         borrowRecord.setBook( borrowRecordResponseDtoToBook( responseDto ) );
         borrowRecord.setId( responseDto.getId() );
         if ( responseDto.getBorrowDate() != null ) {
-            borrowRecord.setBorrowDate( new Date( responseDto.getBorrowDate().getTime() ) );
+            borrowRecord.setBorrowDate( LocalDateTime.ofInstant( responseDto.getBorrowDate().toInstant(), ZoneId.of( "UTC" ) ) );
         }
         if ( responseDto.getReturnDate() != null ) {
-            borrowRecord.setReturnDate( new Date( responseDto.getReturnDate().getTime() ) );
+            borrowRecord.setReturnDate( LocalDateTime.ofInstant( responseDto.getReturnDate().toInstant(), ZoneId.of( "UTC" ) ) );
         }
         borrowRecord.setStatus( responseDto.getStatus() );
 
@@ -53,8 +56,12 @@ public class BorrowRecordMapperImpl implements BorrowRecordMapper {
         if ( entity.getId() != null ) {
             borrowRecordResponseDto.setId( entity.getId() );
         }
-        borrowRecordResponseDto.setBorrowDate( entity.getBorrowDate() );
-        borrowRecordResponseDto.setReturnDate( entity.getReturnDate() );
+        if ( entity.getBorrowDate() != null ) {
+            borrowRecordResponseDto.setBorrowDate( Date.from( entity.getBorrowDate().toInstant( ZoneOffset.UTC ) ) );
+        }
+        if ( entity.getReturnDate() != null ) {
+            borrowRecordResponseDto.setReturnDate( Date.from( entity.getReturnDate().toInstant( ZoneOffset.UTC ) ) );
+        }
         borrowRecordResponseDto.setStatus( entity.getStatus() );
 
         return borrowRecordResponseDto;
