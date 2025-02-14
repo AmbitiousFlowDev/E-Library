@@ -2,6 +2,7 @@ package dev.library.backend.controllers;
 
 import dev.library.backend.dto.requests.AuthenticationRequestDto;
 import dev.library.backend.dto.requests.RegisterRequestDto;
+import dev.library.backend.dto.requests.UserRequestDto;
 import dev.library.backend.dto.response.AuthenticationResponseDto;
 import dev.library.backend.services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +23,19 @@ public class AuthenticationController {
         this.authenticationService = authenticationService;
     }
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponseDto> register(@RequestBody RegisterRequestDto request)
+    public ResponseEntity<?> register(@RequestBody RegisterRequestDto registerRequestDto)
     {
         try
         {
-            return new ResponseEntity<>(this.authenticationService.register(request) , HttpStatus.CREATED);
+            return new ResponseEntity<>(this.authenticationService.register(registerRequestDto) , HttpStatus.CREATED);
         }
         catch (Exception e)
         {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage() , HttpStatus.BAD_REQUEST);
         }
     }
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponseDto> authenticate(@RequestBody AuthenticationRequestDto request)
+    public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequestDto request)
     {
         try
         {
@@ -42,7 +43,7 @@ public class AuthenticationController {
         }
         catch (Exception e)
         {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(e.getMessage() , HttpStatus.UNAUTHORIZED);
         }
     }
 }
