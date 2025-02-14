@@ -24,9 +24,10 @@ import jakarta.persistence.EntityNotFoundException;
 @Service
 public class UserService implements UserDetailsService
 {
-    private PasswordEncoder passwordEncoder;
-    private UserRepository userRepository;
-    private UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+
     @Autowired
     public UserService(UserRepository userRepository , UserMapper userMapper , PasswordEncoder passwordEncoder)
     {
@@ -34,41 +35,35 @@ public class UserService implements UserDetailsService
         this.userRepository  = userRepository;
         this.userMapper      = userMapper;
     }
+
     public List<UserResponseDto> getAllUsers()
     {
-        return this.userMapper.totoDataTransferObjects(this.userRepository.findAll());
+        return this.userMapper.toDataTransferObjects(this.userRepository.findAll());
     }
+
     public UserResponseDto getUser(Long id)
     {
         return this.userRepository.existsById(id) ? this.userMapper.toDataTransferObject(this.userRepository.findById(id).orElseThrow()) : null;
     }
+
     public UserResponseDto createUser(UserRequestDto userRequestDto)
     {
-        User user = User.builder()
-                .email(userRequestDto.getEmail())
-                .password(this.passwordEncoder.encode(userRequestDto.getPassword()))
-                .fullName(userRequestDto.getFullName())
-                .role(userRequestDto.getRole())
-                .build();
+        User user = this.userMapper.toEntity(userRequestDto, this.passwordEncoder);
+        return this.userMapper.toDataTransferObject(this.userRepository.save(user));
+    }
 
-        return this.userMapper.toDataTransferObject(this.userRepository.save(user));
-    }
-    public UserResponseDto updateUser(UserRequestDto userRequestDto)
+    public UserResponseDto updateUser(UserRequestDto userRequestDto , Long id)
     {
-        if (!userRepository.existsById(userRequestDto.getId()))
-        {
-            throw new EntityNotFoundException();
-        }
-        User user = User.builder().build();
+        User user = this.userRepository.findById(id).orElseThrow();
+        this.userMapper.updateUser(user , userRequestDto , this.passwordEncoder);
         return this.userMapper.toDataTransferObject(this.userRepository.save(user));
     }
+
     public void deleteUser(Long id)
     {
-        if (!userRepository.existsById(id)) {
-            throw new EntityNotFoundException("User not found with id: " + id);
-        }
-        userRepository.deleteById(id);
+        this.userRepository.deleteById(id);
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
@@ -76,6 +71,7 @@ public class UserService implements UserDetailsService
         return new org.springframework.security.core.userdetails
                 .User(user.getUsername(),user.getPassword(),this.mapRolesToAuthorities(user.getRole()));
     }
+
     private Collection<GrantedAuthority> mapRolesToAuthorities(Role role)
     {
         return Collections.singletonList(new SimpleGrantedAuthority(role.name()));

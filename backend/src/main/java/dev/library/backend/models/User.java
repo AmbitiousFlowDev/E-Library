@@ -28,18 +28,16 @@ public class User implements UserDetails , Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true , nullable = false)
+    @Column(unique = true)
     private String username;
     private String password;
-    @Column(unique = true , nullable = false)
+    @Column(unique = true)
     private String email;
-    @Column(unique = true , nullable = false)
+    @Column(unique = true)
     private String fullName;
-
     @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
     @JsonBackReference
     private List<BorrowRecord> borrowRecords;
-
     @Enumerated(EnumType.STRING)
     @ColumnDefault("'USER'")
     private Role role;
