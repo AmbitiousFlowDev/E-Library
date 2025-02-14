@@ -1,5 +1,6 @@
 package dev.library.backend.dto.mappers;
 
+import dev.library.backend.dto.requests.UserRequestDto;
 import dev.library.backend.dto.response.UserResponseDto;
 import dev.library.backend.models.User;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-02-14T22:21:53+0100",
+    date = "2025-02-14T22:31:59+0100",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.12 (Oracle Corporation)"
 )
 @Component
@@ -44,5 +45,21 @@ public class UserMapperImpl implements UserMapper {
         }
 
         return list;
+    }
+
+    @Override
+    public User toEntity(UserRequestDto userRequestDto) {
+        if ( userRequestDto == null ) {
+            return null;
+        }
+
+        User.UserBuilder user = User.builder();
+
+        user.username( userRequestDto.getUsername() );
+        user.email( userRequestDto.getEmail() );
+        user.fullName( userRequestDto.getFullName() );
+        user.role( userRequestDto.getRole() );
+
+        return user.build();
     }
 }
