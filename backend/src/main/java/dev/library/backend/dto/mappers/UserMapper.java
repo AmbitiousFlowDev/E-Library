@@ -17,16 +17,16 @@ public interface UserMapper {
     List<UserResponseDto> toDataTransferObjects(List<User> userList);
 
     @Mapping(target = "password", ignore = true)
-    default User toEntity(UserRequestDto userRequestDto , @Context PasswordEncoder passwordEncoder)
-    {
-        User user = new User();
-        user.setUsername(userRequestDto.getUsername());
-        user.setEmail(userRequestDto.getEmail());
+    User toEntity(UserRequestDto userRequestDto);
+
+    @Mapping(target = "password", ignore = true)
+    default User toEntity(UserRequestDto userRequestDto, @Context PasswordEncoder passwordEncoder) {
+        User user = toEntity(userRequestDto);
         if (userRequestDto.getPassword() != null && !userRequestDto.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
         }
         return user;
-    };
+    }
 
     @Mapping(target = "password", ignore = true)
     default void updateUser(@MappingTarget User user, UserRequestDto userRequestDto , @Context PasswordEncoder passwordEncoder)
