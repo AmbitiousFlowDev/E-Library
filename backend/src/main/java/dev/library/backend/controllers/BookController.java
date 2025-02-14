@@ -29,8 +29,10 @@ public class BookController {
        this.bookService = bookService;
     }
     @GetMapping("/")
-    public ResponseEntity<Page<BookResponseDto>> getBooks(@RequestParam(defaultValue = "0") int page ,
-            @RequestParam(defaultValue = "10") int size , @RequestParam(defaultValue = "title") String sortBy,
+    public ResponseEntity<Page<BookResponseDto>> getBooks(
+            @RequestParam(defaultValue = "0") int page ,
+            @RequestParam(defaultValue = "10") int size ,
+            @RequestParam(defaultValue = "title") String sortBy,
             @RequestParam(defaultValue = "asc") String direction
     ) {
         return new ResponseEntity<>(this.bookService.getBooks(page , size , sortBy , direction), HttpStatus.OK);

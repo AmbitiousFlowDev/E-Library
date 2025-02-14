@@ -1,6 +1,6 @@
-package dev.library.backend.config.security;
+package dev.library.backend.security;
 
-import dev.library.backend.config.security.constants.SecurityConstants;
+import dev.library.backend.constants.SecurityConstants;
 import dev.library.backend.models.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

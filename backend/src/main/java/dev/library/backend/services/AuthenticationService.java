@@ -1,6 +1,6 @@
 package dev.library.backend.services;
 
-import dev.library.backend.config.security.JwtService;
+import dev.library.backend.security.JwtService;
 import dev.library.backend.dto.requests.AuthenticationRequestDto;
 import dev.library.backend.dto.requests.RegisterRequestDto;
 import dev.library.backend.dto.response.AuthenticationResponseDto;
@@ -20,12 +20,7 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
     @Autowired
-    public AuthenticationService(
-            UserRepository userRepository,
-            PasswordEncoder passwordEncoder,
-            AuthenticationManager authenticationManager,
-            JwtService jwtService
-    )
+    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService)
     {
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;

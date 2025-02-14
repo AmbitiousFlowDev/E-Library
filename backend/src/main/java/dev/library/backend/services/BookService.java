@@ -23,7 +23,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class BookService {
+public class BookService
+{
     private final BookMapperService bookResponseMapperService;
     private final FileUploadService fileUploadService;
     private final CategoryRepository categoryRepository;
