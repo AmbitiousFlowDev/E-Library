@@ -2,7 +2,11 @@ package dev.library.backend.controllers;
 
 import java.util.List;
 
+import dev.library.backend.dto.requests.UserRequestDto;
+import dev.library.backend.dto.response.UserResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +21,6 @@ import dev.library.backend.models.User;
 import dev.library.backend.services.UserService;
 
 @RestController
-@CrossOrigin
 @RequestMapping("/api/v1/users")
 public class UserController {
     public final UserService userService;
@@ -27,35 +30,66 @@ public class UserController {
         this.userService = userService;
     }
     @GetMapping("/")
-    public List<User> getAllUsers()
+    public ResponseEntity<List<UserResponseDto>> getAllUsers()
     {
-        return userService.getAllUsers();
+        try
+        {
+            return new ResponseEntity<>(this.userService.getAllUsers() , HttpStatus.OK);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @GetMapping("/{id}")
-    public User getUser(@PathVariable Long id)
+    public ResponseEntity<UserResponseDto> getUser(@PathVariable Long id)
     {
-        return userService.getUser(id);
+        try
+        {
+            return new ResponseEntity<>(this.userService.getUser(id), HttpStatus.OK);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @PostMapping
-    public User createUser(@RequestBody User user)
+    @PostMapping("/create")
+    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto user)
     {
-        return userService.createUser(user);
+        try
+        {
+            return new ResponseEntity<>(this.userService.createUser(user), HttpStatus.CREATED);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping
-    public User updateUser(@RequestBody User user)
+    public ResponseEntity<UserResponseDto> updateUser(@RequestBody UserRequestDto user)
     {
-        return userService.updateUser(user);
+        try
+        {
+            return new ResponseEntity<>(this.userService.updateUser(user), HttpStatus.OK);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable("id") Long id)
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id)
     {
-        userService.deleteUser(id);
+        try
+        {
+            return new ResponseEntity<>(null , HttpStatus.OK);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-//    @GetMapping("/{username}")
-//    public User showUser(@PathVariable String username) {
-////        return this.userService.getUser("sikrox.memer");
-//    }
 }

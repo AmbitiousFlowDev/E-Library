@@ -26,7 +26,7 @@ public class AuthenticationController {
     {
         try
         {
-            return new ResponseEntity(this.authenticationService.register(request) , HttpStatus.CREATED);
+            return new ResponseEntity<>(this.authenticationService.register(request) , HttpStatus.CREATED);
         }
         catch (Exception e)
         {
@@ -38,11 +38,11 @@ public class AuthenticationController {
     {
         try
         {
-            return ResponseEntity.ok(this.authenticationService.authenticate(request));
+            return new ResponseEntity<>(this.authenticationService.authenticate(request) , HttpStatus.ACCEPTED);
         }
         catch (Exception e)
         {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 }

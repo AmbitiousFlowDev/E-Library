@@ -1,6 +1,4 @@
-package dev.library.backend.config.security.constants;
-
-import java.util.Date;
+package dev.library.backend.constants;
 
 public final class SecurityConstants {
     public static final long JWT_EXPIRATION = 300 * 1000;
