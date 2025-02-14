@@ -1,6 +1,7 @@
 package dev.library.backend.services;
 
 import dev.library.backend.dto.mappers.UserMapper;
+import dev.library.backend.dto.requests.UserRequestDto;
 import dev.library.backend.security.JwtService;
 import dev.library.backend.dto.requests.AuthenticationRequestDto;
 import dev.library.backend.dto.requests.RegisterRequestDto;
@@ -36,21 +37,24 @@ public class AuthenticationService {
         this.jwtService = jwtService;
         this.userMapper = userMapper;
     }
-    public AuthenticationResponseDto register(RegisterRequestDto request) {
+    public AuthenticationResponseDto register(RegisterRequestDto registerRequestDto)
+    {
 
-        var user = User.builder()
-                .username(request.getUsername())
-                .password(this.passwordEncoder.encode(request.getPassword()))
-                .fullName(request.getFullName())
-                .email(request.getEmail())
+        User user = User.builder()
                 .role(Role.USER)
+                .username(registerRequestDto.getUsername())
+                .email(registerRequestDto.getEmail())
+                .fullName(registerRequestDto.getFullName())
+                .password(this.passwordEncoder.encode(registerRequestDto.getPassword()))
                 .build();
 
         this.userRepository.save(user);
-        var jwtToken = this.jwtService.generateToken(user);
+
+        String jwtToken = this.jwtService.generateToken(user);
         return AuthenticationResponseDto.builder().token(jwtToken).build();
     }
-    public AuthenticationResponseDto authenticate(AuthenticationRequestDto request) {
+    public AuthenticationResponseDto authenticate(AuthenticationRequestDto request)
+    {
         this.authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername() , request.getPassword())
         );
