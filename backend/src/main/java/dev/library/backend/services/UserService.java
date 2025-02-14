@@ -24,6 +24,7 @@ import jakarta.persistence.EntityNotFoundException;
 @Service
 public class UserService implements UserDetailsService
 {
+
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
