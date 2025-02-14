@@ -1,5 +1,6 @@
 package dev.library.backend.services;
 
+import dev.library.backend.dto.mappers.UserMapper;
 import dev.library.backend.security.JwtService;
 import dev.library.backend.dto.requests.AuthenticationRequestDto;
 import dev.library.backend.dto.requests.RegisterRequestDto;
@@ -18,17 +19,33 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
     private final JwtService jwtService;
     @Autowired
-    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService)
+    public AuthenticationService(
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder,
+            AuthenticationManager authenticationManager,
+            JwtService jwtService ,
+            UserMapper userMapper
+    )
     {
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.jwtService = jwtService;
+        this.userMapper = userMapper;
     }
     public AuthenticationResponseDto register(RegisterRequestDto request) {
-        var user = User.builder().username(request.getUsername()).password(this.passwordEncoder.encode(request.getPassword())).role(Role.USER).build();
+
+        var user = User.builder()
+                .username(request.getUsername())
+                .password(this.passwordEncoder.encode(request.getPassword()))
+                .fullName(request.getFullName())
+                .email(request.getEmail())
+                .role(Role.USER)
+                .build();
+
         this.userRepository.save(user);
         var jwtToken = this.jwtService.generateToken(user);
         return AuthenticationResponseDto.builder().token(jwtToken).build();
