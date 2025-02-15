@@ -36,14 +36,19 @@ public class BorrowRecordService
         return this.borrowRecordMapper.toDataTransferObject(this.borrowRecordRepository.findById(id).orElseThrow());
     }
 
-    public BorrowRecordResponseDto updateBorrowRecord(BorrowRecordRequestDto borrowRecordRequestDto)
+    public BorrowRecordResponseDto updateBorrowRecord(Long id , BorrowRecordRequestDto borrowRecordRequestDto)
     {
-        return null;
+        BorrowRecord borrowRecord = this.borrowRecordRepository.findById(id).orElseThrow();
+        User user = this.userRepository.findById(borrowRecordRequestDto.getUserId()).orElseThrow();
+        Book book = this.bookRepository.findById(borrowRecordRequestDto.getBookId()).orElseThrow();
+        this.borrowRecordMapper.update(borrowRecord , borrowRecordRequestDto);
+        this.borrowRecordRepository.save(borrowRecord);
+        return this.borrowRecordMapper.toDataTransferObject(this.borrowRecordRepository.save(borrowRecord));
     }
 
     public void deleteBorrowRecord(Long id)
     {
-        //
+        this.borrowRecordRepository.deleteById(id);
     }
 
     public boolean canUserBorrow(Long id)

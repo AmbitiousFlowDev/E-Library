@@ -7,6 +7,7 @@ import java.util.List;
 import dev.library.backend.dto.mappers.UserMapper;
 import dev.library.backend.dto.requests.UserRequestDto;
 import dev.library.backend.dto.response.UserResponseDto;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,20 +22,13 @@ import dev.library.backend.entities.enums.Role;
 import dev.library.backend.repositories.UserRepository;
 
 @Service
+@AllArgsConstructor
 public class UserService implements UserDetailsService
 {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-
-    @Autowired
-    public UserService(UserRepository userRepository , UserMapper userMapper , PasswordEncoder passwordEncoder)
-    {
-        this.passwordEncoder = passwordEncoder;
-        this.userRepository  = userRepository;
-        this.userMapper      = userMapper;
-    }
 
     public List<UserResponseDto> getAllUsers()
     {
