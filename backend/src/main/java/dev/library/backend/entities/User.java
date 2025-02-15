@@ -37,7 +37,7 @@ public class User implements UserDetails , Serializable {
     @Column(unique = true)
     private String fullName;
 
-    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL , orphanRemoval = true)
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.DETACH , orphanRemoval = true)
     @JsonBackReference
     private List<BorrowRecord> borrowRecords;
 

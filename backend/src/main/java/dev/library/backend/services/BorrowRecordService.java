@@ -36,14 +36,16 @@ public class BorrowRecordService
         return this.borrowRecordMapper.toDataTransferObject(this.borrowRecordRepository.findById(id).orElseThrow());
     }
 
-    public BorrowRecordResponseDto updateBorrowRecord(Long id , BorrowRecordRequestDto borrowRecordRequestDto)
+    public BorrowRecordResponseDto updateBorrowRecord(Long id, BorrowRecordRequestDto borrowRecordRequestDto)
     {
-        BorrowRecord borrowRecord = this.borrowRecordRepository.findById(id).orElseThrow();
-        User user = this.userRepository.findById(borrowRecordRequestDto.getUserId()).orElseThrow();
-        Book book = this.bookRepository.findById(borrowRecordRequestDto.getBookId()).orElseThrow();
-        this.borrowRecordMapper.update(borrowRecord , borrowRecordRequestDto);
-        this.borrowRecordRepository.save(borrowRecord);
-        return this.borrowRecordMapper.toDataTransferObject(this.borrowRecordRepository.save(borrowRecord));
+        BorrowRecord borrowRecord = this.borrowRecordRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("BorrowRecord not found"));
+        User user = this.userRepository.findById(borrowRecordRequestDto.getUserId()).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        Book book = this.bookRepository.findById(borrowRecordRequestDto.getBookId()).orElseThrow(() -> new IllegalArgumentException("Book not found"));
+        borrowRecord.setUser(user);
+        borrowRecord.setBook(book);
+        this.borrowRecordMapper.update(borrowRecord, borrowRecordRequestDto);
+        BorrowRecord updatedBorrowRecord = this.borrowRecordRepository.save(borrowRecord);
+        return this.borrowRecordMapper.toDataTransferObject(updatedBorrowRecord);
     }
 
     public void deleteBorrowRecord(Long id)

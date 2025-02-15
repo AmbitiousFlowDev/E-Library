@@ -20,6 +20,6 @@ public class Category implements Serializable {
     private Long id;
     @Column(unique = true)
     private String name;
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category" , cascade = CascadeType.DETACH)
     private Set<Book> books;
 }
