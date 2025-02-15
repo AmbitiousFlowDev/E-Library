@@ -6,10 +6,9 @@ import dev.library.backend.dto.response.BookResponseDto;
 import dev.library.backend.entities.Book;
 import dev.library.backend.entities.Category;
 import dev.library.backend.repositories.CategoryRepository;
-import dev.library.backend.utils.FileUploader;
+import dev.library.backend.utils.FileUploaderResolver;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +26,7 @@ import java.util.List;
 public class BookService
 {
     private final BookMapperService bookResponseMapperService;
-    private final FileUploader fileUploader;
+    private final FileUploaderResolver fileUploaderResolver;
     private final CategoryRepository categoryRepository;
     private final BookRepository bookRepository;
 
@@ -48,7 +47,7 @@ public class BookService
             Book book = new Book();
             Category category = this.categoryRepository.findById(bookRequestDto.getCategoryId()).orElseThrow(EntityNotFoundException::new);
             System.out.println(category);
-            String cover = this.fileUploader.uploadFile(file);
+            String cover = this.fileUploaderResolver.uploadFile(file);
             book.setAuthor(bookRequestDto.getAuthor());
             book.setTitle(bookRequestDto.getTitle());
             book.setIsbn(bookRequestDto.getIsbn());
