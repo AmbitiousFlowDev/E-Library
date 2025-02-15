@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-02-15T18:09:48+0100",
+    date = "2025-02-15T19:04:30+0100",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.12 (Oracle Corporation)"
 )
 @Component
@@ -92,12 +92,8 @@ public class BorrowRecordMapperImpl implements BorrowRecordMapper {
             entity.setUser( User.builder().build() );
         }
         borrowRecordRequestDtoToUser( borrowRecordResponseDto, entity.getUser() );
-        if ( entity.getBook() == null ) {
-            entity.setBook( Book.builder().build() );
-        }
-        borrowRecordRequestDtoToBook( borrowRecordResponseDto, entity.getBook() );
-        entity.setId( borrowRecordResponseDto.getId() );
         entity.setReturnDate( borrowRecordResponseDto.getReturnDate() );
+        entity.setStatus( borrowRecordResponseDto.getStatus() );
     }
 
     protected User borrowRecordResponseDtoToUser(BorrowRecordResponseDto borrowRecordResponseDto) {
@@ -160,13 +156,5 @@ public class BorrowRecordMapperImpl implements BorrowRecordMapper {
         }
 
         mappingTarget.setId( borrowRecordRequestDto.getUserId() );
-    }
-
-    protected void borrowRecordRequestDtoToBook(BorrowRecordRequestDto borrowRecordRequestDto, Book mappingTarget) {
-        if ( borrowRecordRequestDto == null ) {
-            return;
-        }
-
-        mappingTarget.setId( borrowRecordRequestDto.getBookId() );
     }
 }

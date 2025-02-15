@@ -24,10 +24,10 @@ public class Book implements Serializable
     private String cover;
     private String title;
 
-    @ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.DETACH)
     private Category category;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.DETACH, orphanRemoval = true)
     @JsonBackReference
     private List<BorrowRecord> borrowRecords = new ArrayList<>();
 
