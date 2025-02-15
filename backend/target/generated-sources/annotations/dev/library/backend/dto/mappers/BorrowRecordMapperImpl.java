@@ -1,5 +1,6 @@
 package dev.library.backend.dto.mappers;
 
+import dev.library.backend.dto.requests.BorrowRecordRequestDto;
 import dev.library.backend.dto.response.BorrowRecordResponseDto;
 import dev.library.backend.entities.Book;
 import dev.library.backend.entities.BorrowRecord;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-02-15T16:27:32+0100",
+    date = "2025-02-15T18:09:48+0100",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.12 (Oracle Corporation)"
 )
 @Component
@@ -27,20 +28,20 @@ public class BorrowRecordMapperImpl implements BorrowRecordMapper {
             return null;
         }
 
-        BorrowRecord borrowRecord = new BorrowRecord();
+        BorrowRecord.BorrowRecordBuilder borrowRecord = BorrowRecord.builder();
 
-        borrowRecord.setUser( borrowRecordResponseDtoToUser( responseDto ) );
-        borrowRecord.setBook( borrowRecordResponseDtoToBook( responseDto ) );
-        borrowRecord.setId( responseDto.getId() );
+        borrowRecord.user( borrowRecordResponseDtoToUser( responseDto ) );
+        borrowRecord.book( borrowRecordResponseDtoToBook( responseDto ) );
+        borrowRecord.id( responseDto.getId() );
         if ( responseDto.getBorrowDate() != null ) {
-            borrowRecord.setBorrowDate( LocalDateTime.ofInstant( responseDto.getBorrowDate().toInstant(), ZoneId.of( "UTC" ) ) );
+            borrowRecord.borrowDate( LocalDateTime.ofInstant( responseDto.getBorrowDate().toInstant(), ZoneId.of( "UTC" ) ) );
         }
         if ( responseDto.getReturnDate() != null ) {
-            borrowRecord.setReturnDate( LocalDateTime.ofInstant( responseDto.getReturnDate().toInstant(), ZoneId.of( "UTC" ) ) );
+            borrowRecord.returnDate( LocalDateTime.ofInstant( responseDto.getReturnDate().toInstant(), ZoneId.of( "UTC" ) ) );
         }
-        borrowRecord.setStatus( responseDto.getStatus() );
+        borrowRecord.status( responseDto.getStatus() );
 
-        return borrowRecord;
+        return borrowRecord.build();
     }
 
     @Override
@@ -81,6 +82,24 @@ public class BorrowRecordMapperImpl implements BorrowRecordMapper {
         return list;
     }
 
+    @Override
+    public void update(BorrowRecord entity, BorrowRecordRequestDto borrowRecordResponseDto) {
+        if ( borrowRecordResponseDto == null ) {
+            return;
+        }
+
+        if ( entity.getUser() == null ) {
+            entity.setUser( User.builder().build() );
+        }
+        borrowRecordRequestDtoToUser( borrowRecordResponseDto, entity.getUser() );
+        if ( entity.getBook() == null ) {
+            entity.setBook( Book.builder().build() );
+        }
+        borrowRecordRequestDtoToBook( borrowRecordResponseDto, entity.getBook() );
+        entity.setId( borrowRecordResponseDto.getId() );
+        entity.setReturnDate( borrowRecordResponseDto.getReturnDate() );
+    }
+
     protected User borrowRecordResponseDtoToUser(BorrowRecordResponseDto borrowRecordResponseDto) {
         if ( borrowRecordResponseDto == null ) {
             return null;
@@ -98,11 +117,11 @@ public class BorrowRecordMapperImpl implements BorrowRecordMapper {
             return null;
         }
 
-        Book book = new Book();
+        Book.BookBuilder book = Book.builder();
 
-        book.setId( borrowRecordResponseDto.getBookId() );
+        book.id( borrowRecordResponseDto.getBookId() );
 
-        return book;
+        return book.build();
     }
 
     private Long entityUserId(BorrowRecord borrowRecord) {
@@ -133,5 +152,21 @@ public class BorrowRecordMapperImpl implements BorrowRecordMapper {
             return null;
         }
         return id;
+    }
+
+    protected void borrowRecordRequestDtoToUser(BorrowRecordRequestDto borrowRecordRequestDto, User mappingTarget) {
+        if ( borrowRecordRequestDto == null ) {
+            return;
+        }
+
+        mappingTarget.setId( borrowRecordRequestDto.getUserId() );
+    }
+
+    protected void borrowRecordRequestDtoToBook(BorrowRecordRequestDto borrowRecordRequestDto, Book mappingTarget) {
+        if ( borrowRecordRequestDto == null ) {
+            return;
+        }
+
+        mappingTarget.setId( borrowRecordRequestDto.getBookId() );
     }
 }

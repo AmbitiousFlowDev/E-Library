@@ -51,7 +51,7 @@ public class BorrowRecordController {
     {
         try
         {
-            return new ResponseEntity<>(this.borrowRecordService.updateBorrowRecord(borrowRecordRequestDto) , HttpStatus.OK);
+            return new ResponseEntity<>(this.borrowRecordService.updateBorrowRecord(id , borrowRecordRequestDto) , HttpStatus.OK);
         }
         catch (Exception e)
         {

@@ -8,6 +8,7 @@ import dev.library.backend.entities.Category;
 import dev.library.backend.repositories.CategoryRepository;
 import dev.library.backend.utils.FileUploader;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,19 +23,14 @@ import java.io.IOException;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class BookService
 {
     private final BookMapperService bookResponseMapperService;
     private final FileUploader fileUploader;
     private final CategoryRepository categoryRepository;
     private final BookRepository bookRepository;
-    @Autowired
-    public BookService(BookRepository bookRepository , BookMapperService bookResponseMapperService , FileUploader fileUploader, CategoryRepository categoryRepository) {
-        this.bookResponseMapperService = bookResponseMapperService;
-        this.fileUploader = fileUploader;
-        this.bookRepository            = bookRepository;
-        this.categoryRepository        = categoryRepository;
-    }
+
     public Page<BookResponseDto> getBooks(int page , int size , String sortBy , String direction)
     {
         Sort sort = direction.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
