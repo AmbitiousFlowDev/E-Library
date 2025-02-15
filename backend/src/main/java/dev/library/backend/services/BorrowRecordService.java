@@ -11,6 +11,10 @@ import dev.library.backend.repositories.BookRepository;
 import dev.library.backend.repositories.BorrowRecordRepository;
 import dev.library.backend.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,9 +30,12 @@ public class BorrowRecordService
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
 
-    public List<BorrowRecordResponseDto> getBorrowRecords()
+    public Page<BorrowRecordResponseDto> getBorrowRecords(int page , int size , String sortBy , String sortOrder)
     {
-        return this.borrowRecordMapper.toDataTransferObjects(this.borrowRecordRepository.findAll());
+        Sort sort = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<BorrowRecord> collection = this.borrowRecordRepository.findAll(pageable);
+        return collection.map(this.borrowRecordMapper::toDataTransferObject);
     }
 
     public BorrowRecordResponseDto getBorrowRecord(Long id)
