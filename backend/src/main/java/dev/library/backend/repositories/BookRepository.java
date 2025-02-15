@@ -1,9 +1,6 @@
 package dev.library.backend.repositories;
 
-import dev.library.backend.dto.requests.BookRequestDto;
-import dev.library.backend.dto.response.BookResponseDto;
-import dev.library.backend.models.Book;
-import dev.library.backend.models.Category;
+import dev.library.backend.entities.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
