@@ -4,11 +4,14 @@ import dev.library.backend.dto.response.BorrowRecordResponseDto;
 import dev.library.backend.entities.BorrowRecord;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface BorrowRecordMapper {
+
+    BorrowRecordMapper INSTANCE = Mappers.getMapper(BorrowRecordMapper.class);
 
     @Mapping(source = "userId", target = "user.id")
     @Mapping(source = "bookId", target = "book.id")

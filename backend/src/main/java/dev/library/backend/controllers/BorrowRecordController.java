@@ -1,13 +1,12 @@
 package dev.library.backend.controllers;
 
+import dev.library.backend.dto.requests.BorrowRecordRequestDto;
 import dev.library.backend.dto.response.BorrowRecordResponseDto;
 import dev.library.backend.services.BorrowRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,8 +19,9 @@ public class BorrowRecordController {
     {
         this.borrowRecordService = borrowRecordService;
     }
+
     @GetMapping("/")
-    public ResponseEntity<List<BorrowRecordResponseDto>> getBorrowRecords()
+    public ResponseEntity<?> getBorrowRecords()
     {
         try
         {
@@ -30,6 +30,59 @@ public class BorrowRecordController {
         catch (Exception e)
         {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getBorrowRecord(@PathVariable Long id)
+    {
+        try
+        {
+            return new ResponseEntity<>(this.borrowRecordService.getBorrowRecord(id) , HttpStatus.OK);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateBorrowRecord(@PathVariable Long id, @RequestBody BorrowRecordRequestDto borrowRecordRequestDto)
+    {
+        try
+        {
+            return new ResponseEntity<>(this.borrowRecordService.updateBorrowRecord(borrowRecordRequestDto) , HttpStatus.OK);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createBorrowRecord(@RequestBody BorrowRecordRequestDto borrowRecordRequestDto)
+    {
+        try
+        {
+            return new ResponseEntity<>(this.borrowRecordService.createBorrowRecord(borrowRecordRequestDto) , HttpStatus.CREATED);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteBorrowRecord(@PathVariable Long id)
+    {
+        try
+        {
+            this.borrowRecordService.deleteBorrowRecord(id);
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
