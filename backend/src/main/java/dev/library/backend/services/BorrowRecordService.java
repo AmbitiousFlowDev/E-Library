@@ -73,6 +73,7 @@ public class BorrowRecordService
         BorrowRecord borrowRecord = BorrowRecord.builder()
                 .book(book)
                 .user(user)
+                .status(Status.BORROWED)
                 .borrowDate(LocalDateTime.now())
                 .returnDate(borrowRecordRequestDto.getReturnDate())
                 .build();

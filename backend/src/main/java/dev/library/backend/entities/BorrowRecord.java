@@ -30,14 +30,15 @@ public class BorrowRecord implements Serializable {
 
     @DateTimeFormat(pattern = "DD-MM-YYYY")
     private LocalDateTime returnDate;
-    @ManyToOne(cascade = CascadeType.ALL)
 
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     @JsonManagedReference
     private User user;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id")
+    @JsonManagedReference
     private Book book;
 
     @Enumerated(EnumType.STRING)
