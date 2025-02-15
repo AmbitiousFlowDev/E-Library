@@ -22,11 +22,11 @@ public class BorrowRecordController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<?> getBorrowRecords()
+    public ResponseEntity<?> getBorrowRecords(@RequestParam(defaultValue = "0") int page , @RequestParam(defaultValue = "10") int size , @RequestParam(defaultValue = "status") String sortBy, @RequestParam(defaultValue = "asc") String direction)
     {
         try
         {
-            return new ResponseEntity<>(this.borrowRecordService.getBorrowRecords(), HttpStatus.OK);
+            return new ResponseEntity<>(this.borrowRecordService.getBorrowRecords(page , size , sortBy , direction), HttpStatus.OK);
         }
         catch (Exception e)
         {
