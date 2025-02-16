@@ -23,6 +23,8 @@ public interface BorrowRecordMapper {
     @Mapping(source = "book.id", target = "bookId")
     BorrowRecordResponseDto toDataTransferObject(BorrowRecord entity);
 
+    @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "book.id", target = "bookId")
     List<BorrowRecordResponseDto> toDataTransferObjects(List<BorrowRecord> borrowRecords);
 
     @Mapping(source = "userId", target = "user.id")
