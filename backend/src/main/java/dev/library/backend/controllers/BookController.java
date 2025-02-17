@@ -1,5 +1,6 @@
 package dev.library.backend.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.library.backend.dto.mappers.BookMapper;
 import dev.library.backend.dto.requests.BookRequestDto;
 import dev.library.backend.dto.response.BookResponseDto;
@@ -34,7 +35,7 @@ public class BookController
     {
         try
         {
-            return new ResponseEntity<>(this.bookMapper.toDataTransferObjects(this.bookRepository.findAll()), HttpStatus.OK);
+            return new ResponseEntity<>(this.bookService.getBooks(page , size , sortBy , direction),HttpStatus.OK);
         }
         catch (Exception e)
         {
@@ -47,7 +48,7 @@ public class BookController
     {
         try
         {
-            return new ResponseEntity<>(bookService.getBook(id), HttpStatus.OK);
+            return new ResponseEntity<>(this.bookService.getBook(id), HttpStatus.OK);
         }
         catch (Exception e)
         {
@@ -68,16 +69,18 @@ public class BookController
         }
     }
 
-    @PostMapping(value = "/create" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> createBook(@ModelAttribute BookRequestDto bookRequestDto , @RequestPart("file") MultipartFile file)
+    @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> createBook(@RequestPart("bookRequestDto") String bookRequestDtoJson, @RequestPart("file") MultipartFile file)
     {
         try
         {
+            ObjectMapper objectMapper = new ObjectMapper();
+            BookRequestDto bookRequestDto = objectMapper.readValue(bookRequestDtoJson, BookRequestDto.class);
             if (file.isEmpty())
             {
                 throw new FileNotFoundException("File is empty");
             }
-            return new ResponseEntity<>(this.bookService.createBook(bookRequestDto , file) , HttpStatus.CREATED);
+            return new ResponseEntity<>(this.bookService.createBook(bookRequestDto, file), HttpStatus.CREATED);
         }
         catch (Exception e)
         {
@@ -120,14 +123,16 @@ public class BookController
             return new ResponseEntity<>(e.getMessage() , HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-//    @PreAuthorize("hasRole('LIBRARIAN')")
-//    @PutMapping("/update/{id}")
-//    public Book updateBook( @RequestBody Book book) {
-//        return this.bookService.updateBook(book);
-//    }
-//    @PreAuthorize("hasRole('LIBRARIAN')")
-//    @DeleteMapping("/delete/{id}")
-//    public void deleteBook(@PathVariable Long id) {
-//        this.bookService.deleteBook(id);
-//    }
+    @DeleteMapping("/deleted/{id}")
+    public ResponseEntity<?> deleteBook(@PathVariable Long id)
+    {
+        try
+        {
+            return new ResponseEntity<>(this.bookService.deleteBook(id), HttpStatus.OK);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(e.getMessage() , HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

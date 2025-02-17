@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-02-16T02:33:50+0100",
+    date = "2025-02-18T00:11:06+0100",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.12 (Oracle Corporation)"
 )
 @Component
@@ -25,7 +25,6 @@ public class BookMapperImpl implements BookMapper {
 
         Book.BookBuilder book = Book.builder();
 
-        book.cover( bookRequestDto.getCover() );
         book.title( bookRequestDto.getTitle() );
         book.author( bookRequestDto.getAuthor() );
         book.description( bookRequestDto.getDescription() );
@@ -45,8 +44,8 @@ public class BookMapperImpl implements BookMapper {
 
         bookResponseDto.category( bookCategoryName( book ) );
         bookResponseDto.id( book.getId() );
-        bookResponseDto.cover( book.getCover() );
         bookResponseDto.title( book.getTitle() );
+        bookResponseDto.cover( book.getCover() );
         bookResponseDto.author( book.getAuthor() );
         bookResponseDto.description( book.getDescription() );
         bookResponseDto.isbn( book.getIsbn() );
