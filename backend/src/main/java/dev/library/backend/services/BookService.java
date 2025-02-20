@@ -47,7 +47,6 @@ public class BookService
     public BookResponseDto createBook(BookRequestDto bookRequestDto , MultipartFile file) throws IOException
     {
         Book book = new Book();
-
         try
         {
             Category category = this.categoryRepository.findById(bookRequestDto.getCategoryId()).orElseThrow();
