@@ -5,6 +5,7 @@ import Pagination                           from "../components/pagination/Pagin
 import { FaArrowLeft }                      from "react-icons/fa"
 import { useNavigate }                      from "react-router-dom"
 import Book                                 from "../components/book/Book"
+import BooksList from "../components/book/BooksList.jsx";
 
 export default function BooksPage() {
     const dispatch                 = useDispatch()
@@ -48,13 +49,7 @@ export default function BooksPage() {
                     <div className="text-xl text-gray-600">Loading...</div>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 items-stretch">
-                    {books?.content?.map((item) => (
-                        <div key={item.id} className="flex justify-center">
-                            <Book book={item} />
-                        </div>
-                    ))}
-                </div>
+                <BooksList books={books} />
             )}
             <div className="mt-12 flex justify-center">
                 <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />

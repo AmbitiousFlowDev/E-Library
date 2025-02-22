@@ -5,7 +5,7 @@ import {FaInfoCircle} from "react-icons/fa";
 import Alert from "../components/alert/Alert.jsx";
 
 export default function HomePage() {
-    return <section className="flex flex-col items-center justify-center ">
+    return <section className="flex flex-col items-center justify-center">
         <Alert/>
         <Hero/>
         <LatestBooksList/>

@@ -1,6 +1,6 @@
 package dev.library.backend.services;
 
-import dev.library.backend.dto.mappers.BookMapperService;
+import dev.library.backend.dto.mappers.BookMapper;
 import dev.library.backend.dto.requests.BookRequestDto;
 import dev.library.backend.dto.response.BookResponseDto;
 import dev.library.backend.entities.Book;
@@ -25,23 +25,24 @@ import java.util.List;
 @AllArgsConstructor
 public class BookService
 {
-    private final BookMapperService    bookResponseMapperService;
+
     private final FileUploaderResolver fileUploaderResolver;
     private final CategoryRepository   categoryRepository;
     private final BookRepository       bookRepository;
+    private final BookMapper           bookMapper;
 
     public Page<BookResponseDto> getBooks(int page , int size , String sortBy , String direction)
     {
         Sort sort = direction.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Book> books = this.bookRepository.findAll(pageable);
-        return books.map(this.bookResponseMapperService::toDataTransferObject);
+        return books.map(this.bookMapper::toDataTransferObject);
     }
 
     public BookResponseDto getBook(Long id)
     {
         Book book = this.bookRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        return this.bookResponseMapperService.toDataTransferObject(book);
+        return this.bookMapper.toDataTransferObject(book);
     }
 
     public BookResponseDto createBook(BookRequestDto bookRequestDto , MultipartFile file) throws IOException
@@ -63,30 +64,30 @@ public class BookService
             System.out.println(e.getMessage());
         }
 
-        return this.bookResponseMapperService.toDataTransferObject(this.bookRepository.save(book));
+        return this.bookMapper.toDataTransferObject(this.bookRepository.save(book));
     }
 
     public List<BookResponseDto> getBooksBySearch(String search)
     {
-        return this.bookResponseMapperService
+        return this.bookMapper
                 .toDataTransferObjects(this.bookRepository.searchBooks(search));
     }
 
     public List<BookResponseDto> getLatestBooks()
     {
         List<Book> latestBooks = this.bookRepository.findThreeLatestBooks();
-        return this.bookResponseMapperService.toDataTransferObjects(latestBooks);
+        return this.bookMapper.toDataTransferObjects(latestBooks);
     }
 
     public List<BookResponseDto> getTopBooks()
     {
         List<Book> topBooks=this.bookRepository.getTopBooks();
-        return this.bookResponseMapperService.toDataTransferObjects(topBooks);
+        return this.bookMapper.toDataTransferObjects(topBooks);
     }
 
     public List<BookResponseDto> getBooksByCategories(String categories)
     {
-        return this.bookResponseMapperService.toDataTransferObjects(this.bookRepository.getBooksByCategories(categories));
+        return this.bookMapper.toDataTransferObjects(this.bookRepository.getBooksByCategories(categories));
     }
 
     public Void deleteBook(Long id)
