@@ -2,9 +2,7 @@ import library from "../../assets/library.jpg"
 
 export default function Hero() {
   return (
-    <div className="hero h-[20rem] shadow-lg  border-secondary mb-12"
-         style={{backgroundImage: "url('https://images6.alphacoders.com/705/705836.jpg')" }}>
-      <div className="hero-overlay"></div>
+    <div className="hero h-[35rem] shadow-lg  border-secondary mb-12" style={{backgroundImage: "url('https://images6.alphacoders.com/705/705836.jpg')" }}>
       <div className="hero-content text-white">
         <div className="max-w-md flex flex-col justify-center items-center">
           <h1 className="mb-5 text-5xl font-bold text-center">

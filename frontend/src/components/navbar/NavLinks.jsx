@@ -9,10 +9,7 @@ import {AuthContext} from "../../context/AuthContext.jsx";
 import {logout} from "../../features/auth/AuthReducer.js";
 
 export default function NavLinks() {
-
     const { isAuthenticated , user  } = useContext(AuthContext)
-    console.log(isAuthenticated);
-
     const dispatch = useDispatch();
     const { categories, loading, error } = useSelector(
         (state) => state.categories
@@ -20,12 +17,9 @@ export default function NavLinks() {
     useEffect(() => {
         dispatch(fetchCategories());
     }, [dispatch]);
-
     const handleLogout = () => {
         dispatch(logout());
-
     }
-
     return <ul className="menu menu-horizontal px-1 gap-2">
         <li>
             <Link to={"/books"}>
@@ -53,7 +47,7 @@ export default function NavLinks() {
                     <FaTag className={'size-5'} />
                     <span>Categories</span>
                 </summary>
-                <ul className="rounded-t-none p-2">
+                <ul className="rounded-t-none p-2 z-[2]">
                     {categories?.content?.map((category) => {
                         return (
                             <li key={category.id}>
@@ -67,7 +61,7 @@ export default function NavLinks() {
         {
             !isAuthenticated ? <Link to={"/login"} className={'btn btn-sm btn-primary'}>
                 <FaSignInAlt /><span>Sign in</span>
-            </Link> : <button onClick={handleLogout} className={'btn btn-sm bg-error border-none font-bold'}>Logout</button>
+            </Link> : <button onClick={handleLogout} className={'btn btn-sm bg-error border-none font-bold text-white'}>Logout</button>
         }
     </ul>
 }

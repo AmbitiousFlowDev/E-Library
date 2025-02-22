@@ -10,16 +10,17 @@ export default function Book({ book }) {
                 </div>
             </figure>
             <div className="p-2 flex flex-col gap-2">
-                <h2 className="card-title  text-xl leading-tight">
+                <div className="card-title  text-xl leading-tight">
                     <h1 className="font-[poppins] font-bold">{book.title}</h1>
-                </h2>
+                </div>
                 <h2 className="font-[poppins] font-bold">{book.author}</h2>
                 <div className="card-actions">
-                    <Link className="btn btn-info text-white font-bold" to={`/books/${book.id}`}>
+                    <Link className="btn btn-success text-white font-bold" to={`/books/${book.id}`}>
                         <FaEye className="size-6" />
                         <span>Show Details</span>
                     </Link>
                 </div>
+                <h2 className="font-[poppins] font-bold badge badge-success text-white">{book.category}</h2>
             </div>
         </div>
     );

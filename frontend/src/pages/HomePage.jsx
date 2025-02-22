@@ -8,6 +8,7 @@ export default function HomePage() {
     return <section className="flex flex-col items-center justify-center">
         <Alert/>
         <Hero/>
+     
         <LatestBooksList/>
         <EventList/>
     </section>

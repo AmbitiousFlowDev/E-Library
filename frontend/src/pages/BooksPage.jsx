@@ -6,6 +6,7 @@ import { FaArrowLeft }                      from "react-icons/fa"
 import { useNavigate }                      from "react-router-dom"
 import Book                                 from "../components/book/Book"
 import BooksList from "../components/book/BooksList.jsx";
+import PageNavigator from "../components/navigation/PageNavigator.jsx";
 
 export default function BooksPage() {
     const dispatch                 = useDispatch()
@@ -34,16 +35,7 @@ export default function BooksPage() {
 
     return (
         <div className="container mx-auto px-4 py-10">
-            <header className="flex justify-between items-center mb-8">
-                <h1 className="text-4xl font-bold text-gray-800">Books</h1>
-                <button
-                    className="p-2 rounded-full bg-secondary hover:bg-gray-200 transition-colors duration-200"
-                    onClick={() => navigate(-1)}
-                >
-                    <FaArrowLeft className="w-6 h-6 text-gray-600" />
-                </button>
-            </header>
-
+            <PageNavigator title={'Books'} path={-1}/>
             {loading ? (
                 <div className="flex justify-center items-center h-64">
                     <div className="text-xl text-gray-600">Loading...</div>

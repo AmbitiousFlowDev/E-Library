@@ -3,8 +3,8 @@ import {MdOutlinePassword} from "react-icons/md";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import authenticateUser from "../../features/auth/actions/authenticateUser.js";
-import useAuth from "../../hooks/useAuth.jsx";
+import authenticateUser from "../../../features/auth/actions/authenticateUser.js";
+import useAuth from "../../../hooks/useAuth.jsx";
 
 export default function LoginForm() {
   const { login , token } = useAuth();
