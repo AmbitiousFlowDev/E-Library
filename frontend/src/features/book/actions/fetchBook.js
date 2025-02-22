@@ -9,7 +9,7 @@ const fetchBook = createAsyncThunk('book/fetchBook', async (payload , {rejectWit
     }
     catch (error)
     {
-        rejectWithValue(error.response?.data || error.message);
+        return rejectWithValue(error.response?.data || error.message);
     }
 })
 

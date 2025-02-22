@@ -13,7 +13,7 @@ export default function LatestBooksList() {
     return <section className={"flex flex-col items-center justify-center mb-12 rounded-md mt-12"}>
         <h1 className={'text-4xl font-[poppins] font-bold'}>Latest Books</h1>
         <section className={'flex flex-row items-center justify-center'}>
-            {latestBooks.map(book => <Link to={`/books/${book.id}`}>
+            {latestBooks.map(book => <Link key={book.id} to={`/books/${book.id}`}>
                 <BookPreview key={book.id} book={book} />
             </Link>)}
         </section>

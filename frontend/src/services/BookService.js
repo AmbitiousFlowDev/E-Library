@@ -24,7 +24,7 @@ class BookService
     }
     async getBook(id)
     {
-        return this.http.get(`/${id}`)
+        return this.http.get(`/${Number(id)}`);
     }
 }
 

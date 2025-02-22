@@ -10,7 +10,7 @@ const authenticateUser = createAsyncThunk('auth/login' , async (credentials, { r
     }
     catch (error)
     {
-        rejectWithValue(error.response?.data || error.message);
+        return rejectWithValue(error.response?.data || error.message);
     }
 });
 
