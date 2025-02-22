@@ -2,20 +2,27 @@ import fetchBooks       from "./actions/fetchBooks";
 import fetchLatestBooks from "./actions/fetchLatestBooks"
 import fetchTopBooks    from "./actions/fetchTopBooks"
 import { createSlice }  from "@reduxjs/toolkit"
+import fetchBook from "./actions/fetchBook.js";
 
 
 const BookSlice = createSlice({
     name: 'book',
     initialState: {
+
         books: [],
+        book : {},
         latestBooks: [],
         topBooks: [],
+
         loadingBooks: false,
         loadingLatestBooks: false,
         loadingTopBooks: false,
+        loadingBook : false,
+
         errorBooks: null,
         errorLatestBooks: null,
         errorTopBooks: null,
+        errorBook : null,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -60,8 +67,21 @@ const BookSlice = createSlice({
             state.loadingTopBooks = false;
             state.errorTopBooks = action.payload;
         });
+
+        builder.addCase(fetchBook.pending, (state, action) => {
+            state.loadingBook = true;
+            state.errorBook = null
+        });
+        builder.addCase(fetchBook.fulfilled, (state, action) => {
+            state.loadingBook = true;
+            state.book = action.payload;
+        });
+        builder.addCase(fetchBook.rejected, (state, action) => {
+            state.loadingBook = false;
+            state.errorBook = action.payload;
+        });
     }
 });
 
-
-export default BookSlice.reducer;
+const BookReducer = BookSlice.reducer;
+export default BookReducer;

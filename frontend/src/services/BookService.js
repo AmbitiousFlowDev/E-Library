@@ -6,9 +6,9 @@ class BookService
     {
         this.http = axios.create({baseURL : "/api/v1/books"});
     }
-    async getAllBooks()
+    async getAllBooks(page , size , sortBy)
     {
-        return this.http.get("/")
+        return this.http.get(`/?page=${page}&size=${size}&sortBy=${sortBy}`);
     }
     async getTopBooks()
     {
@@ -21,6 +21,10 @@ class BookService
     async getBooksByCategory(category)
     {
         return this.http.get(`/category=${category}`)
+    }
+    async getBook(id)
+    {
+        return this.http.get(`/${id}`)
     }
 }
 

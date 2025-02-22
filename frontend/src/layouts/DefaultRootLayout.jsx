@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import Navbar     from "../components/Navbar.jsx";
-import Footer     from "../components/Footer.jsx";
+import Navbar     from "../components/navbar/Navbar.jsx";
+import Footer     from "../components/footer/Footer.jsx";
 
 export default function DefaultRootLayout() {
   return (
@@ -8,7 +8,7 @@ export default function DefaultRootLayout() {
       <header>
         <Navbar />
       </header>
-      <main className="flex-grow">
+      <main className="flex-grow bg-base-200">
         <Outlet />
       </main>
       <footer>
