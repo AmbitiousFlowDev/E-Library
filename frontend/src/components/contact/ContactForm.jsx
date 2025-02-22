@@ -1,5 +1,5 @@
-import Input from "./Input";
-import TextArea from "./TextArea";
+import Input from "../form/Input.jsx";
+import TextArea from "../form/TextArea.jsx";
 
 export default function ContactForm() {
   return (

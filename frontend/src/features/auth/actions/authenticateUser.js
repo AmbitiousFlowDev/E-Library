@@ -1,5 +1,5 @@
-const { createAsyncThunk } = require("@reduxjs/toolkit");
-import AuthService from "../../../services/AuthService";
+import {createAsyncThunk} from "@reduxjs/toolkit";
+import AuthService        from "../../../services/AuthService";
 
 
 const authenticateUser = createAsyncThunk('auth/login' , async (credentials, { rejectWithValue }) => {

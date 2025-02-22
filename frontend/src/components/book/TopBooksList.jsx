@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
-import fetchTopBooks from "../features/book/actions/fetchTopBooks.js";
+import fetchTopBooks from "../../features/book/actions/fetchTopBooks.js";
 
 export default function TopBooksList() {
 

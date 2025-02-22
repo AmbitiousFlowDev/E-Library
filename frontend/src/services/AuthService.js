@@ -1,4 +1,4 @@
-const { default: axios } = require("axios");
+import axios from "axios";
 
 class AuthService
 {
@@ -8,7 +8,7 @@ class AuthService
     }
     async authenticate(credintials)
     {
-        return await this.http.post("/login", credintials);
+        return await this.http.post("/authenticate", credintials);
     }
 }
 
