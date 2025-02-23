@@ -6,7 +6,7 @@ export default function PageNavigator({path , title}) {
     return <section className={'font-[poppins] mb-12 flex flex-row justify-between'}>
         <h1 className={'text-5xl font-bold'}>{title}</h1>
         <button className={'btn btn-ghost'} onClick={() => {navigation(path)}}>
-            <FaArrowLeft className={'size-8'} />
+            <FaArrowRight className={'size-8'} />
         </button>
     </section>
 }
