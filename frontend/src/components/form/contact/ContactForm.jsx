@@ -1,5 +1,7 @@
 import {CiUser} from "react-icons/ci";
 import {MdEmail} from "react-icons/md";
+import Input from "../Input.jsx";
+import TextArea from "../TextArea.jsx";
 
 
 export default function ContactForm() {
@@ -9,13 +11,15 @@ export default function ContactForm() {
           <h2 className="card-title text-4xl flex justify-center text-center mb-4">Contact</h2>
           <label className="input input-lg w-full">
             <CiUser />
-            <input type="text" name="username" className="grow w-full" placeholder="Full Name"/>
+            <Input type={"text"} name={"fullName"} className={"grow w-full"} placeHolder={"Full Name"}/>
           </label>
           <label className="input  input-lg w-full">
             <MdEmail />
-            <input type="email" name="password" className="grow" placeholder="Your Personal Email"/>
+            <Input type={"email"} name={"password"} className={"grow"} placeHolder={"Your Personal Email"}/>
           </label>
-          <textarea placeholder="Message" className="textarea textarea-bordered textarea-lg w-full resize-none"></textarea>
+          <TextArea placeHolder={"Message"} className={"textarea textarea-bordered textarea-lg w-full resize-none"}>
+            ...
+          </TextArea>
           <div className="card-actions flex mt-4 justify-center">
             <a className="btn btn-primary w-full" href={"mailto:random@gmail.com"}>
               Send
