@@ -9,7 +9,6 @@ E:\Projects\Full Stack\ALMS\backend\src\main\java\dev\library\backend\controller
 E:\Projects\Full Stack\ALMS\backend\src\main\java\dev\library\backend\controllers\CategoryController.java
 E:\Projects\Full Stack\ALMS\backend\src\main\java\dev\library\backend\controllers\UserController.java
 E:\Projects\Full Stack\ALMS\backend\src\main\java\dev\library\backend\dto\mappers\BookMapper.java
-E:\Projects\Full Stack\ALMS\backend\src\main\java\dev\library\backend\dto\mappers\BookMapperService.java
 E:\Projects\Full Stack\ALMS\backend\src\main\java\dev\library\backend\dto\mappers\BorrowRecordMapper.java
 E:\Projects\Full Stack\ALMS\backend\src\main\java\dev\library\backend\dto\mappers\CategoryMapper.java
 E:\Projects\Full Stack\ALMS\backend\src\main\java\dev\library\backend\dto\mappers\UserMapper.java
