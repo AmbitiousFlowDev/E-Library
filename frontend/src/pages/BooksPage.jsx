@@ -7,7 +7,7 @@ import { useNavigate }                      from "react-router-dom"
 import Book                                 from "../components/book/Book"
 
 export default function BooksPage() {
-    const dispatch                 = useDispatch()
+    const dispatch= useDispatch()
     const [currentPage, setCurrentPage] = useState(0)
     const [totalPages, setTotalPages]   = useState(1)
     const navigate               = useNavigate()
