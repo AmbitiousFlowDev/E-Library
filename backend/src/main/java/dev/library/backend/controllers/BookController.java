@@ -100,7 +100,7 @@ public class BookController
         }
     }
 
-    @GetMapping("/topBooks")
+    @GetMapping("/topbooks")
     public ResponseEntity<?> getTopBooks(){
         try
         {

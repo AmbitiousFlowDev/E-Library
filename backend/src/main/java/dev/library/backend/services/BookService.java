@@ -1,6 +1,6 @@
 package dev.library.backend.services;
 
-import dev.library.backend.dto.mappers.BookMapperService;
+import dev.library.backend.dto.mappers.BookMapper;
 import dev.library.backend.dto.requests.BookRequestDto;
 import dev.library.backend.dto.response.BookResponseDto;
 import dev.library.backend.entities.Book;
@@ -25,7 +25,7 @@ import java.util.List;
 @AllArgsConstructor
 public class BookService
 {
-    private final BookMapperService    bookResponseMapperService;
+    private final BookMapper    bookResponseMapperService;
     private final FileUploaderResolver fileUploaderResolver;
     private final CategoryRepository   categoryRepository;
     private final BookRepository       bookRepository;
@@ -77,6 +77,7 @@ public class BookService
         List<Book> latestBooks = this.bookRepository.findThreeLatestBooks();
         return this.bookResponseMapperService.toDataTransferObjects(latestBooks);
     }
+
 
     public List<BookResponseDto> getTopBooks()
     {
