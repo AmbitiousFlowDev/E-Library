@@ -88,6 +88,7 @@ public class BookService
     public List<BookResponseDto> getBooksByCategories(String categories)
     {
         return this.bookResponseMapperService.toDataTransferObjects(this.bookRepository.getBooksByCategories(categories));
+
     }
 
     public Void deleteBook(Long id)
