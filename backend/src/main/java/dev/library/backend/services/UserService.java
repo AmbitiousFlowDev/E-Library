@@ -77,4 +77,11 @@ public class UserService implements UserDetailsService
     {
         return Collections.singletonList(new SimpleGrantedAuthority(role.name()));
     }
+    public UserResponseDto getUserProfileByName(String name) {
+        User user = userRepository.findByUsername(name);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found with name: " + name);
+        }
+        return userMapper.toDataTransferObject(user);
+    }
 }

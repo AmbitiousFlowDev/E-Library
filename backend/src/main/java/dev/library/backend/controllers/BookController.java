@@ -100,7 +100,7 @@ public class BookController
         }
     }
 
-    @GetMapping("/topBooks")
+    @GetMapping("/topbooks")
     public ResponseEntity<?> getTopBooks(){
         try
         {
@@ -112,15 +112,14 @@ public class BookController
         }
     }
 
+
     @GetMapping("/category={category}")
-    public ResponseEntity <?> getBooksByCategories(@PathVariable String category){
-        try
-        {
-            return new ResponseEntity<>(this.bookService.getBooksByCategories(category),HttpStatus.OK);
-        }
-        catch (Exception e)
-        {
-            return new ResponseEntity<>(e.getMessage() , HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<?> getBooksByCategory(@PathVariable String category) {
+        try {
+            List<BookResponseDto> books = this.bookService.getBooksByCategories(category);
+            return new ResponseEntity<>(books, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @DeleteMapping("/deleted/{id}")

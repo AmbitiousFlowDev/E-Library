@@ -9,7 +9,7 @@ import BooksList from "../components/book/BooksList.jsx";
 import PageNavigator from "../components/navigation/PageNavigator.jsx";
 
 export default function BooksPage() {
-    const dispatch                 = useDispatch()
+    const dispatch= useDispatch()
     const [currentPage, setCurrentPage] = useState(0)
     const [totalPages, setTotalPages]   = useState(1)
     const navigate               = useNavigate()
