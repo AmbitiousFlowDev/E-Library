@@ -26,8 +26,6 @@ import java.util.List;
 @AllArgsConstructor
 public class BookService
 {
-    private final BookMapper    bookResponseMapperService;
-
     private final FileUploaderResolver fileUploaderResolver;
     private final CategoryRepository   categoryRepository;
     private final BookRepository       bookRepository;
@@ -90,8 +88,6 @@ public class BookService
 
     public List<BookResponseDto> getBooksByCategories(String categories)
     {
-        return this.bookResponseMapperService.toDataTransferObjects(this.bookRepository.getBooksByCategories(categories));
-
         return this.bookMapper.toDataTransferObjects(this.bookRepository.getBooksByCategories(categories));
     }
 
