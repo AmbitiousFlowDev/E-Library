@@ -2,6 +2,7 @@ services:
   MySQL:
     image: mysql:latest
     container_name: MySQL
+    restart : always
     environment:
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
       MYSQL_DATABASE: ${DATABASE_NAME}
@@ -11,7 +12,7 @@ services:
       - database:/var/lib/mysql
   Admin:
     image: phpmyadmin
-    container_name: Admin
+    container_name: PhpMyAdmin
     restart: always
     ports:
       - 6060:80
