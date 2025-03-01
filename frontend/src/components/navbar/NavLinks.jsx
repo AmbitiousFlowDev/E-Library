@@ -5,8 +5,8 @@ import {FaTag} from "react-icons/fa6";
 import {useDispatch, useSelector} from "react-redux";
 import {useContext, useEffect} from "react";
 import fetchCategories from "../../features/category/actions/fetchCategories.js";
-import {AuthContext} from "../../context/AuthContext.jsx";
-import {logout} from "../../features/auth/AuthReducer.js";
+import {AuthContext}   from "../../context/AuthContext.jsx";
+import {logout}      from "../../features/auth/AuthReducer.js";
 
 export default function NavLinks() {
     const { isAuthenticated , user  } = useContext(AuthContext)
@@ -14,12 +14,15 @@ export default function NavLinks() {
     const { categories, loading, error } = useSelector(
         (state) => state.categories
     );
+    
     useEffect(() => {
         dispatch(fetchCategories());
     }, [dispatch]);
+
     const handleLogout = () => {
         dispatch(logout());
     }
+
     return <ul className="menu menu-horizontal px-1 gap-2">
         <li>
             <Link to={"/books"}>

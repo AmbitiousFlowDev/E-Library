@@ -1,20 +1,22 @@
-import DefaultRootLayout from "./layouts/DefaultRootLayout.jsx";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AuthProvider    from "./context/AuthProvider.jsx";
-import AdminRootLayout from "./layouts/AdminRootLayout.jsx";
-import ProtectedRoute  from "./utils/ProtectedRoute.jsx";
-import {Suspense}      from "react";
-import LoadingPage     from "./pages/LoadingPage.jsx";
+import DefaultRootLayout  from "./layouts/DefaultRootLayout.jsx";
+import { BrowserRouter    as Router, Routes, Route } from "react-router-dom";
+import AuthProvider       from "./context/AuthProvider.jsx";
+import AdminRootLayout    from "./layouts/AdminRootLayout.jsx";
+import ProtectedRoute     from "./utils/ProtectedRoute.jsx";
+import {Suspense}         from "react";
+import lazyComponent      from "./utils/lazyComponent.js"
 
-import lazyComponent from "./utils/lazyComponent.js"
-import BorrowPage from "./pages/BorrowPage.jsx";
 
-const HomePage    = lazyComponent(() => import("./pages/HomePage.jsx"));
-const BooksPage   = lazyComponent(() => import("./pages/BooksPage.jsx"));
-const LoginPage   = lazyComponent(() => import("./pages/LoginPage.jsx"));
-const ContactPage = lazyComponent(() => import("./pages/ContactPage.jsx"));
-const BookPage    = lazyComponent(() => import("./pages/BookPage.jsx"));
-const ProfilePage = lazyComponent(() => import("./pages/ProfilePage.jsx"));
+const HomePage           = lazyComponent(() => import("./pages/user/HomePage.jsx"));
+const BooksPage          = lazyComponent(() => import("./pages/user/BooksPage.jsx"));
+const LoginPage          = lazyComponent(() => import("./pages/auth/LoginPage.jsx"));
+const ContactPage        = lazyComponent(() => import("./pages/user/ContactPage.jsx"));
+const BookPage           = lazyComponent(() => import("./pages/user/BookPage.jsx"));
+const ProfilePage        = lazyComponent(() => import("./pages/user/ProfilePage.jsx"));
+const BorrowPage         = lazyComponent(() => import("./pages/user/BorrowPage.jsx"));
+const AdminDashBoardPage = lazyComponent(() => import("./pages/admin/AdminDashBoardPage.jsx"));
+const LoadingPage        = lazyComponent(() => import("./pages/loading/LoadingPage.jsx"));
+const AdminUsersPage     = lazyComponent(() => import("./pages/admin/AdminUsersPage.jsx"));
 
 export default function App() {
   return (
@@ -34,7 +36,8 @@ export default function App() {
               </Route>
             </Route>
             <Route path={"/admin/*"} element={<AdminRootLayout/>}>
-              <Route index element={<h1>Admin</h1>} />
+              <Route index element={<AdminDashBoardPage/>} />
+              <Route path="users" element={<AdminUsersPage/>} />
             </Route>
           </Routes>
         </Router>

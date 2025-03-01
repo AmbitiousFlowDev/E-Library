@@ -8,6 +8,9 @@ const borrowRecordSlice = createSlice({
         record: null,
         loading: false,
         error: null,
+        records : [],
+        loadingRecords : false,
+        errorRecords : null,
     },
     reducers: {},
     extraReducers: (builder) => {

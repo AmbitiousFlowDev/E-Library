@@ -1,11 +1,13 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 
-const Portal = ({ children }) => {
-    return ReactDOM.createPortal(
-        children,
-        document.getElementById("portal-root") // Make sure to add this div in index.html
-    );
-};
-
-export default Portal;
+export default function Portal({ children }) {
+  const portalRef = useRef(document.createElement("div"));
+  useEffect(() => {
+    document.body.appendChild(portalRef.current);
+    return () => {
+      document.body.removeChild(portalRef.current);
+    };
+  }, []);
+  return createPortal(children, portalRef.current);
+}
