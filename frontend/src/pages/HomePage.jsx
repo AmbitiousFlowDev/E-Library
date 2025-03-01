@@ -5,8 +5,9 @@ import Alert           from "../components/alert/Alert.jsx";
 import alert           from "../constants/alert.json"
 
 export default function HomePage() {
+    document.title = `E-Library - Home`
     return <section className="flex flex-col items-center justify-center">
-        <Alert color={"success"} title={alert.title} text={alert.text} />
+        <Alert color={'info'} title={alert.title} text={alert.text} />
         <Hero/>
         <LatestBooksList/>
         <EventList/>

@@ -1,8 +1,9 @@
-import fetchBooks       from "./actions/fetchBooks";
-import fetchLatestBooks from "./actions/fetchLatestBooks"
-import fetchTopBooks    from "./actions/fetchTopBooks"
-import { createSlice }  from "@reduxjs/toolkit"
-import fetchBook from "./actions/fetchBook.js";
+import fetchBooks         from "./actions/fetchBooks";
+import fetchLatestBooks   from "./actions/fetchLatestBooks"
+import fetchTopBooks      from "./actions/fetchTopBooks"
+import fetchBooksBySearch from "./actions/fetchBooksBySearch.js"
+import { createSlice }    from "@reduxjs/toolkit"
+import fetchBook          from "./actions/fetchBook.js";
 
 
 const BookSlice = createSlice({
@@ -13,16 +14,21 @@ const BookSlice = createSlice({
         book : {},
         latestBooks: [],
         topBooks: [],
+        searchedBooks : [],
 
         loadingBooks: false,
         loadingLatestBooks: false,
         loadingTopBooks: false,
         loadingBook : false,
+        loadingSearchedBooks : false,
 
         errorBooks: null,
         errorLatestBooks: null,
         errorTopBooks: null,
         errorBook : null,
+        errorSearchedBooks : null,
+
+        
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -73,12 +79,25 @@ const BookSlice = createSlice({
             state.errorBook = null
         });
         builder.addCase(fetchBook.fulfilled, (state, action) => {
-            state.loadingBook = true;
+            state.loadingBook = false;
             state.book = action.payload;
         });
         builder.addCase(fetchBook.rejected, (state, action) => {
             state.loadingBook = false;
             state.errorBook = action.payload;
+        });
+
+        builder.addCase(fetchBooksBySearch.pending, (state, action) => {
+            state.loadingSearchedBooks = true;
+            state.errorSearchedBooks = null
+        });
+        builder.addCase(fetchBooksBySearch.fulfilled, (state, action) => {
+            state.loadingSearchedBooks = false;
+            state.searchedBooks = action.payload;
+        });
+        builder.addCase(fetchBooksBySearch.rejected, (state, action) => {
+            state.loadingBook = false;
+            state.errorSearchedBooks = action.payload;
         });
     }
 });

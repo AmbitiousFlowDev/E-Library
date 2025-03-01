@@ -8,7 +8,7 @@ import {AuthContext} from "../../context/AuthContext.jsx";
 export default function Navbar() {
     const {isAuthenticated} = useContext(AuthContext)
     return <nav className={'navbar bg-base-100 shadow-sm flex gap-8 font-[montserrat] px-44 py-2 font-bold'}>
-        <Brand/>
+        <Brand title={"E-Library"} />
         <SearchBar/>
         <NavLinks/>
         {!isAuthenticated ? null : <Profile/>}
