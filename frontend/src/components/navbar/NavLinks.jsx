@@ -64,7 +64,7 @@ export default function NavLinks() {
         {
             !isAuthenticated ? <Link to={"/login"} className={'btn btn-sm btn-primary'}>
                 <FaSignInAlt /><span>Sign in</span>
-            </Link> : <button onClick={handleLogout} className={'btn btn-sm bg-error border-none font-bold text-white'}>Logout</button>
+            </Link> : <button onClick={handleLogout} className={'btn btn-sm bg-error border-none font-bold text-white'}>Sign out</button>
         }
     </ul>
 }
