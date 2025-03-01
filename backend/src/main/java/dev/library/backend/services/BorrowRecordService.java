@@ -90,5 +90,5 @@ public class BorrowRecordService
         return this.borrowRecordMapper.toDataTransferObject(this.borrowRecordRepository.save(borrowRecord));
     }
 
-    public BorrowRecordResponseDto
+//    public BorrowRecordResponseDto
 }
