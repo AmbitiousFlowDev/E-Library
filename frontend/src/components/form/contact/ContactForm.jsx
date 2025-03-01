@@ -6,7 +6,7 @@ import TextArea from "../TextArea.jsx";
 
 export default function ContactForm() {
   return (
-      <form className="card bg-base-100 w-[38rem] h-[26rem] shadow-lg font-[poppins]">
+      <form className="card bg-base-100 w-[38rem] h-[26rem] shadow-lg font-[poppins] border-[0.6px] border-[#ccc]">
         <div className="card-body flex flex-col justify-center">
           <h2 className="card-title text-4xl flex justify-center text-center mb-4">Contact</h2>
           <label className="input input-lg w-full">
@@ -18,7 +18,7 @@ export default function ContactForm() {
             <Input type={"email"} name={"password"} className={"grow"} placeHolder={"Your Personal Email"}/>
           </label>
           <TextArea placeHolder={"Message"} className={"textarea textarea-bordered textarea-lg w-full resize-none"}>
-            ...
+            Your super message 🌟
           </TextArea>
           <div className="card-actions flex mt-4 justify-center">
             <a className="btn btn-primary w-full" href={"mailto:random@gmail.com"}>

@@ -26,6 +26,10 @@ class BookService
     {
         return this.http.get(`/${Number(id)}`);
     }
+    async getBooksBySearch(search)
+    {
+        return this.http.get(`/search=${search}`)
+    }
 }
 
 export default new BookService();

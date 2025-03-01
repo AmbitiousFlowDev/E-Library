@@ -30,7 +30,7 @@ export default function BorrowForm({ book }) {
     };
 
     return (
-        <div className="card card-side bg-base-100 shadow-xl font-[poppins]">
+        <div className="card card-side bg-base-100 shadow-xl font-[poppins] border-[0.5px] border-[#ccc]">
 
             <figure className="w-1/4 flex-shrink-0">
                 <img

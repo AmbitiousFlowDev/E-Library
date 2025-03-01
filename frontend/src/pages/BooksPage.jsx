@@ -2,9 +2,7 @@ import { useEffect, useState, useCallback } from "react"
 import fetchBooks                           from "../features/book/actions/fetchBooks"
 import { useSelector, useDispatch }         from "react-redux"
 import Pagination                           from "../components/pagination/Pagination"
-import { FaArrowLeft }                      from "react-icons/fa"
-import { useNavigate }                      from "react-router-dom"
-import Book                                 from "../components/book/Book"
+
 import BooksList from "../components/book/BooksList.jsx";
 import PageNavigator from "../components/navigation/PageNavigator.jsx";
 
@@ -12,9 +10,9 @@ export default function BooksPage() {
     const dispatch= useDispatch()
     const [currentPage, setCurrentPage] = useState(0)
     const [totalPages, setTotalPages]   = useState(1)
-    const navigate               = useNavigate()
 
-    const { books, loading, error } = useSelector((state) => state.books)
+
+    const { books, loading , error } = useSelector((state) => state.books)
 
     const handlePageChange = (page) => {
         setCurrentPage(page - 1)

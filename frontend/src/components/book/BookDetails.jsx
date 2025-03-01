@@ -2,17 +2,17 @@ import {IoMdAddCircle} from "react-icons/io";
 import {Link} from "react-router-dom";
 
 export default function BookDetails({ book }) {
-    return <div className="card card-side bg-base-100 shadow-xl font-[poppins]">
+    return <div className="card card-side bg-base-100 shadow-xl font-[poppins] border-[0.5px] border-[#ccc]">
         <figure className="w-1/4 flex-shrink-0">
             <img
                 src={`/storage/${book.cover}`}
-                alt="Movie"
+                alt={book.title}
                 className="w-full h-full object-cover"
             />
         </figure>
         <div className="card-body flex-grow">
             <h2 className="card-title text-4xl">{book.title}</h2>
-            <p className="text-justify font-medium">
+            <p className="text-justify font-medium font-[poppins]">
                 {book.description}
             </p>
 
