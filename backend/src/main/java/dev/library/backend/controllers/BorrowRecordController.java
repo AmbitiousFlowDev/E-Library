@@ -87,16 +87,16 @@ public class BorrowRecordController {
         }
     }
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<?> getUserBorrowRecords(@PathVariable Long id)
-    {
-        try
-        {
-            //
-        }
-        catch (Exception e)
-        {
-            //
-        }
-    }
+//    @GetMapping("/user/{id}")
+//    public ResponseEntity<?> getUserBorrowRecords(@PathVariable Long id)
+//    {
+//        try
+//        {
+//            //
+//        }
+//        catch (Exception e)
+//        {
+//            //
+//        }
+//    }
 }

@@ -1,7 +1,9 @@
 import LoginForm from "../../components/form/auth/LoginForm.jsx";
 
 export default function LoginPage() {
-  return <section className={'h-[40rem] flex items-center justify-center'}>
-      <LoginForm/>
-  </section>;
+  return (
+    <section className={"h-[40rem] flex items-center justify-center"}>
+      <LoginForm />
+    </section>
+  );
 }

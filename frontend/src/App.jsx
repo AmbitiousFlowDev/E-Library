@@ -14,9 +14,11 @@ const ContactPage        = lazyComponent(() => import("./pages/user/ContactPage.
 const BookPage           = lazyComponent(() => import("./pages/user/BookPage.jsx"));
 const ProfilePage        = lazyComponent(() => import("./pages/user/ProfilePage.jsx"));
 const BorrowPage         = lazyComponent(() => import("./pages/user/BorrowPage.jsx"));
-const AdminDashBoardPage = lazyComponent(() => import("./pages/admin/AdminDashBoardPage.jsx"));
 const LoadingPage        = lazyComponent(() => import("./pages/loading/LoadingPage.jsx"));
+
+const AdminDashBoardPage = lazyComponent(() => import("./pages/admin/AdminDashBoardPage.jsx"));
 const AdminUsersPage     = lazyComponent(() => import("./pages/admin/AdminUsersPage.jsx"));
+const AdminBooksPage     = lazyComponent(() => import("./pages/admin/AdminBooksPage.jsx"));
 
 export default function App() {
   return (
@@ -38,6 +40,7 @@ export default function App() {
             <Route path={"/admin/*"} element={<AdminRootLayout/>}>
               <Route index element={<AdminDashBoardPage/>} />
               <Route path="users" element={<AdminUsersPage/>} />
+              <Route path="books" element={<AdminBooksPage/>} />
             </Route>
           </Routes>
         </Router>
