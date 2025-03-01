@@ -4,7 +4,7 @@
     "keys": ["id", "fullName", "username", "email", "role"]
   },
   "book" : {
-    "header": ["ID", "Title", "Author", "ISBN", "Category",  "Copies"],
+    "header": ["ID", "Title", "Author", "ISBN", "Category",  "Copies" , "Actions"],
     "keys": ["id", "title", "author", "isbn", "category",  "copies"]
   }
 }

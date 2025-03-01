@@ -6,7 +6,7 @@ export default function Alert({ title, text, color, onClose }) {
       role="alert"
       className={`alert alert-${color} w-full rounded-none text-center flex justify-center items-center`}
     >
-      <FaInfoCircle className="size-6" />
+      <FaInfoCircle className="size-4" />
       <span className="font-bold">{title}</span>
       <span>{text}</span>
       {onClose && (
