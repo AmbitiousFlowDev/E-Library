@@ -86,4 +86,17 @@ public class BorrowRecordController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> getUserBorrowRecords(@PathVariable Long id)
+    {
+        try
+        {
+            //
+        }
+        catch (Exception e)
+        {
+            //
+        }
+    }
 }
