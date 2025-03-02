@@ -8,7 +8,7 @@ export default function BookPreview({ book }) {
       </figure>
       <div className="card-body">
         <h2 className="card-title text-center flex justify-center text-1xl">
-            <span className={'font-[poppins] font-bold'}>{book.title}</span>
+            <span className={'font-[poppins] text-xl font-bold'}>{book.title}</span>
         </h2>
       </div>
     </div>

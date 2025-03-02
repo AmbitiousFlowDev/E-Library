@@ -7,21 +7,25 @@ export default function Input({
   className,
   placeHolder,
   value,
+  icon = null,
   required = true,
   ref = null,
 }) {
   return (
-    <input
-      id={id}
-      list={list}
-      ref={ref}
-      type={type}
-      name={name}
-      value={value}
-      onChange={onChange}
-      className={className}
-      placeholder={placeHolder}
-      required={required}
-    />
+    <label className="input input-lg w-full">
+      {icon}
+      <input
+        id={id}
+        list={list}
+        ref={ref}
+        type={type}
+        name={name}
+        value={value}
+        onChange={onChange}
+        className={className}
+        placeholder={placeHolder}
+        required={required}
+      />
+    </label>
   );
 }

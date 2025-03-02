@@ -28,5 +28,8 @@ class BookService {
   async deleteBook(id) {
     return this.http.delete(`/delete/${Number(id)}`);
   }
+  async createBook(data) {
+    return this.http.post("/create", data);
+  }
 }
 export default new BookService();
