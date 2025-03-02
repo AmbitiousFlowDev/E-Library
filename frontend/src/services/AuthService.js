@@ -10,6 +10,10 @@ class AuthService
     {
         return await this.http.post("/authenticate", credintials);
     }
+    async register(credintials)
+    {
+        return await this.http.post("/register" , credintials)
+    }
 }
 
 export default new AuthService()

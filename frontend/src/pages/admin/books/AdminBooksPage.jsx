@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import fetchBooks from "../../features/book/actions/fetchBooks";
-import PageNavigator from "../../components/navigation/PageNavigator";
-
-import Pagination from "../../components/pagination/Pagination";
-import BooksTable from "../../components/admin/table/BooksTable";
+import fetchBooks from "../../../features/book/actions/fetchBooks";
+import PageNavigator from "../../../components/navigation/PageNavigator";
+import Pagination from "../../../components/pagination/Pagination";
+import BooksTable from "../../../components/admin/table/BooksTable";
 import { Link } from "react-router-dom";
+import Page from "../../Page";
 
 export default function AdminBooksPage() {
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ export default function AdminBooksPage() {
   }, [books]);
 
   return (
-    <section className="w-full mt-12 p-6">
+    <Page className="container flex flex-col px-12 mt-12">
       <PageNavigator title={"Books Manager"} path={-1} />
       <BooksTable books={books?.content} loading={loading} />
       <Pagination
@@ -45,10 +45,10 @@ export default function AdminBooksPage() {
         onPageChange={handlePageChange}
       />
       <section className="mt-12 flex flex-row justify-end">
-        <Link to={"create"} className="btn btn-sm btn-primary">
+        <Link to={"/admin/books/create"} className="btn btn-sm btn-primary">
           Create Book
         </Link>
       </section>
-    </section>
+    </Page>
   );
 }

@@ -2,6 +2,7 @@ import fetchBooks         from "./actions/fetchBooks";
 import fetchLatestBooks   from "./actions/fetchLatestBooks"
 import fetchTopBooks      from "./actions/fetchTopBooks"
 import fetchBooksBySearch from "./actions/fetchBooksBySearch.js"
+import createBook         from "./actions/createBook.js"
 import { createSlice }    from "@reduxjs/toolkit"
 import fetchBook          from "./actions/fetchBook.js";
 
@@ -99,6 +100,19 @@ const BookSlice = createSlice({
             state.loadingBook = false;
             state.errorSearchedBooks = action.payload;
         });
+
+        builder.addCase(createBook.pending, (state) => {
+            state.loadingBook = true;
+            state.errorBook = null;
+          });
+          builder.addCase(createBook.fulfilled, (state, action) => {
+            state.loadingBook = false;
+            state.books.push(action.payload);
+          });
+          builder.addCase(createBook.rejected, (state, action) => {
+            state.loadingBook = false;
+            state.errorBook = action.payload;
+          });
     }
 });
 
