@@ -4,9 +4,11 @@ import AuthProvider       from "./context/AuthProvider.jsx";
 import ProtectedRoute     from "./utils/ProtectedRoute.jsx";
 import {Suspense}         from "react";
 import lazyComponent      from "./utils/lazyComponent.js"
-import RegisterPage       from "./pages/auth/RegisterPage.jsx";
-import AdminCreateBookPage from "./pages/admin/books/AdminCreateBookPage.jsx";
 
+
+import RegisterPage        from "./pages/auth/RegisterPage.jsx";
+import AdminCreateBookPage from "./pages/admin/books/AdminCreateBookPage.jsx";
+import AdminUpdateBookPage from "./pages/admin/books/AdminUpdateBookPage.jsx"
 
 const HomePage           = lazyComponent(() => import("./pages/user/HomePage.jsx"));
 const BooksPage          = lazyComponent(() => import("./pages/user/BooksPage.jsx"));
@@ -44,6 +46,7 @@ export default function App() {
               <Route path="users" element={<AdminUsersPage/>} />
               <Route path="books" element={<AdminBooksPage/>} />
               <Route path="books/create" element={<AdminCreateBookPage/>} />
+              <Route path="books/update/:id" element={<AdminUpdateBookPage/>}/>
             </Route>
           </Routes>
         </Router>

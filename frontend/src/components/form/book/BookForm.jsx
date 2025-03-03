@@ -1,16 +1,16 @@
-import Form from "../Form";
-import Input from "../Input";
-import TextArea from "../TextArea";
+import Form from "../components/Form";
+import Input from "../components/Input";
+import TextArea from "../components/TextArea";
 
 import { MdOutlineTitle } from "react-icons/md";
 import { FaUserAlt } from "react-icons/fa";
-import Select from "../Select";
+import Select from "../components/Select";
 import { useSelector } from "react-redux";
-import Option from "../Option";
-import FormBody from "../FormBody";
-import FormFooter from "../FormFooter";
+import Option from "../components/Option";
+import FormBody from "../components/FormBody";
+import FormFooter from "../components/FormFooter";
 
-export default function BookForm({ data, setData, loading, error, onSubmit }) {
+export default function BookForm({ data, setData, loading, error, onSubmit , submitValueText }) {
   const { categories } = useSelector((state) => state.categories);
   return (
     <Form onAction={onSubmit} encType="multipart/form-data" >
@@ -40,7 +40,7 @@ export default function BookForm({ data, setData, loading, error, onSubmit }) {
               }))
             }
             placeHolder="Description"
-            className="textarea textarea-bordered textarea-lg w-full resize-none"
+            className="textarea textarea-bordered textarea-lg w-full h-[2rem]"
           >{data?.description}</TextArea>
         </div>
         <div className="flex flex-row gap-2">
@@ -111,7 +111,7 @@ export default function BookForm({ data, setData, loading, error, onSubmit }) {
       </FormBody>
       <FormFooter className="flex flex-col">
         <button type="submit" className="btn btn-primary" disabled={loading}>
-          {loading ? "Submitting..." : "Create"}
+          {loading ? "Submitting..." : submitValueText}
         </button>
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
       </FormFooter>

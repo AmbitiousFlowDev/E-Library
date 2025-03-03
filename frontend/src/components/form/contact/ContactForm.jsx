@@ -1,8 +1,8 @@
 import { MdEmail } from "react-icons/md";
-import Input from "../Input.jsx";
-import TextArea from "../TextArea.jsx";
-import Form from "../Form.jsx";
-import FormTitle from "../FormTitle.jsx";
+import Input from "../components/Input.jsx";
+import TextArea from "../components/TextArea.jsx";
+import Form from "../components/Form.jsx";
+import FormTitle from "../components/FormTitle.jsx";
 import { FaUser } from "react-icons/fa";
 
 /**

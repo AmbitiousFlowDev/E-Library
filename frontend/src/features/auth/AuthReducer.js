@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import authenticateUser from "./actions/authenticateUser.js";
-import registerUser from "./actions/registerUser.js";
-import { jwtDecode } from "jwt-decode";
+import registerUser   from "./actions/registerUser.js";
+import { jwtDecode }  from "jwt-decode";
 
 const TOKEN = localStorage.getItem("token");
 
@@ -45,27 +45,27 @@ const AuthSlice = createSlice({
         state.error = action.payload;
       });
 
-    // builder
-    //   .addCase(registerUser.pending, (state) => {
-    //     state.loading = true;
-    //     state.error = null;
-    //   })
-    //   .addCase(registerUser.fulfilled, (state, action) => {
-    //     state.loading = false;
-    //     state.token = action.payload.token;
-    //     const decodedToken = jwtDecode(action.payload.token);
-    //     state.user = {
-    //       role: decodedToken.role,
-    //       id: decodedToken.id,
-    //       sub: decodedToken.sub,
-    //     };
-    //     state.isAuthenticated = true;
-    //     localStorage.setItem("token", action.payload.token);
-    //   })
-    //   .addCase(registerUser.rejected, (state, action) => {
-    //     state.loading = false;
-    //     state.error = action.payload;
-    //   });
+    builder
+      .addCase(registerUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.token = action.payload.token;
+        const decodedToken = jwtDecode(action.payload.token);
+        state.user = {
+          role: decodedToken.role,
+          id: decodedToken.id,
+          sub: decodedToken.sub,
+        };
+        state.isAuthenticated = true;
+        localStorage.setItem("token", action.payload.token);
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });
 
