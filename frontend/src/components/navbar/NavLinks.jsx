@@ -29,6 +29,7 @@ export default function NavLinks() {
 
   const handleLogout = () => {
     dispatch(logout());
+    // window.location.reload();
   };
 
   return (

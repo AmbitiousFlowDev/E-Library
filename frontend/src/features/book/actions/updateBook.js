@@ -1,6 +1,14 @@
-const updateBook = createAsyncThunk("book/updateBook", async ({ id, data }) => {
-  const response = await BookService.updateBook(id, data);
-  return response.data;
-});
+import BookService from "../../../services/BookService";
 
+const updateBook = createAsyncThunk(
+  "book/updateBook",
+  async ({ id, data }, { rejectWithValue }) => {
+    try {
+      const response = await BookService.updateBook(id, data);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
 export default updateBook;

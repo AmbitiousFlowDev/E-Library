@@ -16,7 +16,7 @@ class BorrowRecordService
     }
     async getBorrowRecordByUserId(id)
     {
-        return this.http.get("/user={id}")
+        return this.http.get(`/user=${id}`)
     }
     async addBorrowRecord(borrowRecord)
     {

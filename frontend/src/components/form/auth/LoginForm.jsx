@@ -1,11 +1,11 @@
 import { CiUser } from "react-icons/ci";
 import { MdOutlinePassword } from "react-icons/md";
 import { Link } from "react-router-dom";
-import Input from "../Input.jsx";
-import Form from "../Form.jsx";
-import FormTitle from "../FormTitle.jsx";
-import FormBody from "../FormBody.jsx";
-import FormFooter from "../FormFooter.jsx";
+import Input from "../components/Input.jsx";
+import Form from "../components/Form.jsx";
+import FormTitle from "../components/FormTitle.jsx";
+import FormBody from "../components/FormBody.jsx";
+import FormFooter from "../components/FormFooter.jsx";
 
 /**
  * LoginForm component that renders the login form UI and handles the form submission.
