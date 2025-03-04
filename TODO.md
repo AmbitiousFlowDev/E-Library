@@ -4,7 +4,7 @@
 - [x] Online book reservation.
 
 2. Features for Librarians:
-- [ ] Adding, modifying and deleting books in the library.
+- [x] Adding, modifying and deleting books in the library.
 - [ ] User management (registrations, deletions).
 - [ ] Monitoring of borrowings and returns.
 
