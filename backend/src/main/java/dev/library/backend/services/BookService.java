@@ -62,10 +62,38 @@ public class BookService
         catch (Exception e)
         {
             System.out.println(e.getMessage());
+            throw e;
         }
 
         return this.bookMapper.toDataTransferObject(this.bookRepository.save(book));
     }
+
+    public BookResponseDto updateBook(Long bookId, BookRequestDto bookRequestDto, MultipartFile file) throws IOException {
+    Book existingBook = this.bookRepository.findById(bookId)
+            .orElseThrow(() -> new RuntimeException("Book not found with ID: " + bookId));
+
+    try {
+        Category category = this.categoryRepository.findById(bookRequestDto.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("Category not found with ID: " + bookRequestDto.getCategoryId()));
+
+        if (file != null && !file.isEmpty()) {
+            String newCover = this.fileUploaderResolver.uploadFile(file);
+            existingBook.setCover(newCover);
+        }
+
+        existingBook.setAuthor(bookRequestDto.getAuthor());
+        existingBook.setTitle(bookRequestDto.getTitle());
+        existingBook.setIsbn(bookRequestDto.getIsbn());
+        existingBook.setCopies(bookRequestDto.getCopies());
+        existingBook.setCategory(category);
+
+        Book updatedBook = this.bookRepository.save(existingBook);
+        return this.bookMapper.toDataTransferObject(updatedBook);
+    } catch (Exception e) {
+        System.out.println(e.getMessage());
+        throw e;
+    }
+}
 
     public List<BookResponseDto> getBooksBySearch(String search)
     {

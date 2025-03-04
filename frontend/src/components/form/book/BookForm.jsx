@@ -10,10 +10,11 @@ import Option from "../components/Option";
 import FormBody from "../components/FormBody";
 import FormFooter from "../components/FormFooter";
 
-export default function BookForm({ data, setData, loading, error, onSubmit , submitValueText }) {
+export default function BookForm({ data, setData, loading, error, onSubmit, submitValueText }) {
   const { categories } = useSelector((state) => state.categories);
+
   return (
-    <Form onAction={onSubmit} encType="multipart/form-data" >
+    <Form onAction={onSubmit} encType="multipart/form-data">
       <FormBody className="flex flex-col gap-3 font-[poppins]">
         <div className="flex flex-row gap-2 font-[poppins]">
           <Input
@@ -41,7 +42,7 @@ export default function BookForm({ data, setData, loading, error, onSubmit , sub
             }
             placeHolder="Description"
             className="textarea textarea-bordered textarea-lg w-full h-[2rem]"
-          >{data?.description}</TextArea>
+          />
         </div>
         <div className="flex flex-row gap-2">
           <Input
@@ -86,11 +87,15 @@ export default function BookForm({ data, setData, loading, error, onSubmit , sub
             onChange={(e) =>
               setData((prev) => ({
                 ...prev,
-                category: e.target.value,
+                category: Number(e.target.value),
               }))
             }
+            value={data.category} 
             className="select select-md"
           >
+            <Option value="" disabled>
+              Select a category
+            </Option>
             {categories?.content?.map((item) => (
               <Option key={item.id} value={item.id} innerText={item.name} />
             ))}
@@ -113,7 +118,7 @@ export default function BookForm({ data, setData, loading, error, onSubmit , sub
         <button type="submit" className="btn btn-primary" disabled={loading}>
           {loading ? "Submitting..." : submitValueText}
         </button>
-        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+        {error && <p className="text-red-500 text-sm mt-2 font-black">Error : {error}</p>}
       </FormFooter>
     </Form>
   );
