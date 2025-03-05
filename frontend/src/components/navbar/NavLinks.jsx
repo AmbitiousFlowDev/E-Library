@@ -11,10 +11,10 @@ import NavLink from "./NavLink.jsx";
 
 const links = [
   {
-    text : "",
-    path : "",
-  }
-]
+    text: "",
+    path: "",
+  },
+];
 
 export default function NavLinks() {
   const { isAuthenticated, user } = useContext(AuthContext);
@@ -47,19 +47,12 @@ export default function NavLinks() {
         </Link>
       </NavLink>
       {user?.role === "LIBRARIAN" ? (
-        <li>
-          <details>
-            <summary>
-              <MdAdminPanelSettings className={"size-5"} />
-              <span>Admin</span>
-            </summary>
-            <ul className="rounded-t-none p-2 z-[2]">
-                <li>Borrow Records</li>
-                <li>Users</li>
-                <li>Books</li>
-              </ul>
-          </details>
-        </li>
+        <NavLink className="flex flex-row items-center">
+          <Link to="/admin">
+            <MdAdminPanelSettings className={"size-6"} />
+            <span>Admin</span>
+          </Link>
+        </NavLink>
       ) : null}
       <NavLink>
         <details>
