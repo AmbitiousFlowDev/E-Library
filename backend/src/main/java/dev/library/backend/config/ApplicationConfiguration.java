@@ -1,7 +1,6 @@
 package dev.library.backend.config;
 
 import dev.library.backend.repositories.UserRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,11 +16,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
+@EnableScheduling
 @EnableSpringDataWebSupport(pageSerializationMode = EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO)
 @RequiredArgsConstructor
 public class ApplicationConfiguration {
-    @Autowired
-    private UserRepository userRepository;
+    @Autowired    private UserRepository userRepository;
     @Bean
     public UserDetailsService userDetailsService() {
         return this.userRepository::findByUsername;

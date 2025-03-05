@@ -1,10 +1,18 @@
 {
   "user": {
-    "header": ["ID", "Full Name", "Username", "Email", "Role"],
+    "header": ["ID", "Full Name", "Username", "Email", "Role", "Actions"],
     "keys": ["id", "fullName", "username", "email", "role"]
   },
-  "book" : {
-    "header": ["ID", "Title", "Author", "ISBN", "Category",  "Copies" , "Actions"],
-    "keys": ["id", "title", "author", "isbn", "category",  "copies"]
+  "book": {
+    "header": [
+      "ID",
+      "Title",
+      "Author",
+      "ISBN",
+      "Category",
+      "Copies",
+      "Actions"
+    ],
+    "keys": ["id", "title", "author", "isbn", "category", "copies"]
   }
 }

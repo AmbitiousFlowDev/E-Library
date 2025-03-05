@@ -1,6 +1,6 @@
-export default function NanLink({children})
+export default function NanLink({children , className})
 {
-    return <li>
+    return <li className={className}>
         {children}
     </li>
 }

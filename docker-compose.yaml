@@ -2,7 +2,7 @@ services:
   MySQL:
     image: mysql:latest
     container_name: MySQL
-    restart : always
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
       MYSQL_DATABASE: ${DATABASE_NAME}
@@ -10,13 +10,23 @@ services:
       - "3306:3306"
     volumes:
       - database:/var/lib/mysql
+
   Admin:
     image: phpmyadmin
     container_name: PhpMyAdmin
     restart: always
     ports:
-      - 6060:80
+      - "6060:80"
     environment:
       - PMA_ARBITRARY=1
+      - MAX_EXECUTION_TIME=0
+      - MEMORY_LIMIT=-1
+      - UPLOAD_LIMIT=2G
+      - PHP_SESSION_GC_MAXLIFETIME=31536000
+      - PHP_SESSION_SAVE_PATH=/sessions
+    volumes:
+      - phpmyadmin_sessions:/sessions
+
 volumes:
   database:
+  phpmyadmin_sessions:
