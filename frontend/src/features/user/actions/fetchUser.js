@@ -3,9 +3,9 @@ import UserService from "../../../services/UserService"
 
 const fetchUserById = createAsyncThunk(
   "user/fetchUser",
-  async (id, { rejectWithValue }) => {
+  async (payload, { rejectWithValue }) => {
     try {
-      const response = await UserService.getUserById(id);
+      const response = await UserService.getUserById(payload.id);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
