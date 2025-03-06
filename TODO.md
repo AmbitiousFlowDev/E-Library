@@ -5,8 +5,8 @@
 
 2. Features for Librarians:
 - [x] Adding, modifying and deleting books in the library.
-- [ ] User management (registrations, deletions).
-- [ ] Monitoring of borrowings and returns.
+- [x] User management (registrations, deletions).
+- [x] Monitoring of borrowings and returns.
 
 3. Management of loans and returns:
 - [x] A feature to reserve books with a time limit.
