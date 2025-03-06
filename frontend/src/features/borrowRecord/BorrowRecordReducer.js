@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import addBorrowRecord from "./actions/addBorrowRecord.js";
 import fetchUserBorrowRecords from "./actions/fetchUserBorrowRecords.js";
+import fetchBorrowRecords from "./actions/fetchBorrowRecords.js"
 
 const borrowRecordSlice = createSlice({
   name: "borrowRecord",
@@ -41,6 +42,18 @@ const borrowRecordSlice = createSlice({
       .addCase(fetchUserBorrowRecords.rejected, (state, action) => {
         state.loadingUserBooks = false;
         state.errorUserBooks = action.payload;
+      })
+      .addCase(fetchBorrowRecords.pending, (state) => {
+        state.loadingRecords = true;
+        state.errorRecords = null;
+      })
+      .addCase(fetchBorrowRecords.fulfilled, (state, action) => {
+        state.loadingRecords = false;
+        state.records = action.payload;
+      })
+      .addCase(fetchBorrowRecords.rejected, (state, action) => {
+        state.loadingRecords = false;
+        state.errorRecords = action.payload;
       });
   },
 });

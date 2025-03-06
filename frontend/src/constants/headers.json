@@ -14,5 +14,15 @@
       "Actions"
     ],
     "keys": ["id", "title", "author", "isbn", "category", "copies"]
+  },
+  "borrowRecords": {
+    "header": [
+      "ID",
+      "User ID",
+      "Book ID",
+      "Borrow Date",
+      "Return Date",
+      "Status"
+    ]
   }
 }
