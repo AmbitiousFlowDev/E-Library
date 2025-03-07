@@ -10,8 +10,9 @@ import ErrorAlert from "../../alert/ErrorAlert.jsx"
 export default function BorrowForm({ book }) {
   const { user } = useContext(AuthContext);
   const dispatch = useDispatch();
+
   const { loading, error } = useSelector((state) => state.borrowRecords);
-  const [showError, setShowError] = useState(false); // State to control error visibility
+  const [showError, setShowError] = useState(false); 
 
   const today = new Date();
   const borrowDate = today.toISOString().split("T")[0];
@@ -28,9 +29,7 @@ export default function BorrowForm({ book }) {
       borrowDate: `${borrowDate}T00:00:00`,
       returnDate: `${formattedReturnDate}T00:00:00`,
     };
-    dispatch(addBorrowRecord(borrowRecord))
-      .unwrap()
-      .catch(() => setShowError(true)); // Show error if the action fails
+    dispatch(addBorrowRecord(borrowRecord)).unwrap().catch(() => setShowError(true));
   };
 
   return (
@@ -48,8 +47,7 @@ export default function BorrowForm({ book }) {
 
         <div className="card-actions flex items-center justify-end">
           <p>
-            <span className="badge badge-outline badge-primary">{book.category}</span> -
-            <span className="font-bold"> {book.author}</span>
+            <span className="badge badge-outline badge-primary">{book.category}</span> - <span className="font-bold">{book.author}</span>
           </p>
           <p className="flex gap-2">
             <input
@@ -79,7 +77,7 @@ export default function BorrowForm({ book }) {
       {/* Render the ErrorAlert if showError is true */}
       {showError && (
         <ErrorAlert
-          message="An Error Occurred During Action. Please Try Again!"
+          message={error}
           onClose={() => setShowError(false)}
         />
       )}

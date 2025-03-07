@@ -1,10 +1,10 @@
 import { FaInfoCircle, FaTimes } from "react-icons/fa";
 
-export default function Alert({ title, text, color, onClose }) {
+export default function Alert({ title, text, className, onClose }) {
   return (
     <div
       role="alert"
-      className={`alert alert-${color} w-full rounded-none text-center flex justify-center items-center`}
+      className={className}
     >
       <FaInfoCircle className="size-4" />
       <span className="font-bold">{title}</span>

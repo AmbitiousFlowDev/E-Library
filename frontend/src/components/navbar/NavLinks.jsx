@@ -9,12 +9,6 @@ import { AuthContext } from "../../context/AuthContext.jsx";
 import { logout } from "../../features/auth/AuthReducer.js";
 import NavLink from "./NavLink.jsx";
 
-const links = [
-  {
-    text: "",
-    path: "",
-  },
-];
 
 export default function NavLinks() {
   const { isAuthenticated, user } = useContext(AuthContext);
@@ -29,7 +23,7 @@ export default function NavLinks() {
 
   const handleLogout = () => {
     dispatch(logout());
-    // window.location.reload();
+    window.location.reload();
   };
 
   return (
