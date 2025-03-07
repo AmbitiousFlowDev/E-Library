@@ -26,7 +26,7 @@ public class AuthenticationService {
     {
 
         User user = User.builder()
-                .role(Role.ROLE_USER)
+                .role(Role.USER)
                 .username(registerRequestDto.getUsername())
                 .email(registerRequestDto.getEmail())
                 .fullName(registerRequestDto.getFullName())

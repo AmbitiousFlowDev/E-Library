@@ -13,7 +13,7 @@ export default function BooksTable({ books, loading }) {
 
   const handleDispatchDelete = useCallback(
     (id) => {
-      dispatch(deleteBook({ id })).then(() => {
+      dispatch(deleteBook({ id : id })).then(() => {
         dispatch(fetchBooks());
       });
     },

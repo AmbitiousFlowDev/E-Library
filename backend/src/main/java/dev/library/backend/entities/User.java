@@ -42,7 +42,7 @@ public class User implements UserDetails {
     private List<BorrowRecord> borrowRecords;
 
     @Enumerated(EnumType.STRING)
-    @ColumnDefault("'ROLE_USER'")
+    @ColumnDefault("'USER'")
     private Role role;
 
     @OneToMany(mappedBy = "user" , cascade = CascadeType.DETACH , orphanRemoval = true)

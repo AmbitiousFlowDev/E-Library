@@ -1,5 +1,5 @@
 import { IoMdAddCircle } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaCheck } from "react-icons/fa";
 import React, { useContext, useState } from "react";
 import addBorrowRecord from "../../../features/borrowRecord/actions/addBorrowRecord.js";
@@ -10,6 +10,8 @@ import ErrorAlert from "../../alert/ErrorAlert.jsx"
 export default function BorrowForm({ book }) {
   const { user } = useContext(AuthContext);
   const dispatch = useDispatch();
+
+  const navigate = useNavigate()
 
   const { loading, error } = useSelector((state) => state.borrowRecords);
   const [showError, setShowError] = useState(false); 
@@ -29,7 +31,13 @@ export default function BorrowForm({ book }) {
       borrowDate: `${borrowDate}T00:00:00`,
       returnDate: `${formattedReturnDate}T00:00:00`,
     };
-    dispatch(addBorrowRecord(borrowRecord)).unwrap().catch(() => setShowError(true));
+    dispatch(addBorrowRecord(borrowRecord))
+    .unwrap()
+    .then(() => {
+      alert('Succesfully Borrowed Book , Returning to books page');
+      navigate('/books');
+    })
+    .catch(() => setShowError(true));
   };
 
   return (

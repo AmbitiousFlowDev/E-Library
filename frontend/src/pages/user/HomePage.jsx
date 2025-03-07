@@ -23,7 +23,7 @@ export default function HomePage() {
   document.title = `E-Library - Home`;
   return (
     <section className="flex flex-col items-center justify-center">
-      <Alert color="info" title={alert.title} text={alert.text} />
+      <Alert className={'alert alert-success w-full rounded-none text-center flex justify-center'} title={alert.title} text={alert.text} />
       <Hero />
       <LatestBooksList />
       <EventList />

@@ -2,18 +2,12 @@ import { AuthContext } from "./AuthContext.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import authenticateUser from "../features/auth/actions/authenticateUser";
 import registerUser from "../features/auth/actions/registerUser";
-import { useMemo } from "react";
+import isTokenExpired from "../utils/isTokenExpired.js"
+import { useEffect , useMemo } from "react";
 
-/**
- * Authentication provider component that manages authentication state and actions.
- *
- * @param {Object} props - Component props.
- * @param {React.ReactNode} props.children - The child components wrapped by the provider.
- * @returns {JSX.Element} AuthContext provider wrapping the application.
- */
 export default function AuthProvider({ children }) {
   const dispatch = useDispatch();
-  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const { user, isAuthenticated, token } = useSelector((state) => state.auth);
 
   /**
    * Handles user login by dispatching the authentication action.
@@ -33,14 +27,25 @@ export default function AuthProvider({ children }) {
     dispatch(registerUser(credentials));
   };
 
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
+  useEffect(() => {
+    if (token && isTokenExpired(token)) {
+      handleLogout();
+    }
+  }, [token]);
+
   const value = useMemo(
     () => ({
       user,
       login,
       isAuthenticated,
       register,
+      logout: handleLogout,
     }),
-    [isAuthenticated]
+    [user, isAuthenticated, token]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

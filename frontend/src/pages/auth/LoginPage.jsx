@@ -24,7 +24,7 @@ export default function LoginPage() {
    */
   const handleLoginSubmit = (credentials) => {
     login(credentials);
-    if (!error) {
+    if (error === null) {
       navigate('/');
     }
   };
