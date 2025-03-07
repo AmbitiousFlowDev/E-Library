@@ -2,11 +2,11 @@ import fetchBooks from "./actions/fetchBooks";
 import fetchLatestBooks from "./actions/fetchLatestBooks";
 import fetchTopBooks from "./actions/fetchTopBooks";
 import fetchBooksBySearch from "./actions/fetchBooksBySearch.js";
-import updateBook from "./actions/updateBook.js"
+import updateBook from "./actions/updateBook.js";
 import createBook from "./actions/createBook.js";
 import { createSlice } from "@reduxjs/toolkit";
 import fetchBook from "./actions/fetchBook.js";
-
+import deleteBook from "./actions/deleteBook.js"; 
 
 const BookSlice = createSlice({
   name: "book",
@@ -108,6 +108,7 @@ const BookSlice = createSlice({
       state.loadingBook = false;
       state.errorBook = action.payload;
     });
+
     builder.addCase(updateBook.pending, (state) => {
       state.loadingBook = true;
       state.errorBook = null;
@@ -121,6 +122,23 @@ const BookSlice = createSlice({
       );
     });
     builder.addCase(updateBook.rejected, (state, action) => {
+      state.loadingBook = false;
+      state.errorBook = action.payload;
+    });
+
+    builder.addCase(deleteBook.pending, (state) => {
+      state.loadingBook = true;
+      state.errorBook = null;
+    });
+    builder.addCase(deleteBook.fulfilled, (state, action) => {
+      state.loadingBook = false;
+      const deletedBookId = action.payload; 
+      state.books = state.books.filter((book) => book.id !== deletedBookId);
+      if (state.book.id === deletedBookId) {
+        state.book = {}; 
+      }
+    });
+    builder.addCase(deleteBook.rejected, (state, action) => {
       state.loadingBook = false;
       state.errorBook = action.payload;
     });

@@ -40,7 +40,7 @@ export default function NavLinks() {
           <span>Contact</span>
         </Link>
       </NavLink>
-      {user?.role === "ROLE_LIBRARIAN" ? (
+      {user?.role === "LIBRARIAN" ? (
         <NavLink className="flex flex-row items-center">
           <Link to="/admin">
             <MdAdminPanelSettings className={"size-6"} />

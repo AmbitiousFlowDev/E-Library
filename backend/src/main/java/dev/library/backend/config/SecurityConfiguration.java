@@ -34,9 +34,11 @@ public class SecurityConfiguration {
                     authorizeRequests.requestMatchers("/api/v1/auth/authenticate", "/api/v1/auth/register").permitAll();
                     authorizeRequests.requestMatchers("/storage/**").permitAll();
 
+                    
                     authorizeRequests.requestMatchers(HttpMethod.POST, "/api/v1/borrowRecords/create").authenticated();
                     authorizeRequests.requestMatchers(HttpMethod.GET, "/api/v1/messages/user/{userId}").authenticated();
 
+                    authorizeRequests.requestMatchers(HttpMethod.GET, "/api/v1/books/**").permitAll();
                     authorizeRequests.requestMatchers(HttpMethod.GET, "/api/v1/categories/").permitAll();
                     authorizeRequests.requestMatchers(HttpMethod.GET, "/api/v1/books/").permitAll();
                     authorizeRequests.requestMatchers(HttpMethod.GET, "/api/v1/books/category={category}").permitAll();
@@ -46,10 +48,8 @@ public class SecurityConfiguration {
                     authorizeRequests.requestMatchers(HttpMethod.GET, "/api/v1/borrowRecords/user/{id}").authenticated();
 
                     authorizeRequests.requestMatchers(HttpMethod.GET, "/api/v1/borrowRecords/").hasRole("LIBRARIAN");
-
                     authorizeRequests.requestMatchers(HttpMethod.DELETE, "/api/v1/borrowRecords/delete/{id}").hasRole("LIBRARIAN");
                     authorizeRequests.requestMatchers(HttpMethod.PUT, "/api/v1/borrowRecords/update/{id}").hasRole("LIBRARIAN");
-
                     authorizeRequests.requestMatchers(HttpMethod.GET, "/api/v1/borrowRecords/{id}").hasRole("LIBRARIAN");
                     authorizeRequests.requestMatchers(HttpMethod.POST, "/api/v1/categories/create").hasRole("LIBRARIAN");
                     authorizeRequests.requestMatchers(HttpMethod.DELETE, "/api/v1/categories/delete/{id}").hasRole("LIBRARIAN");
@@ -63,7 +63,6 @@ public class SecurityConfiguration {
                     authorizeRequests.requestMatchers(HttpMethod.GET, "/api/v1/users/{id}").hasRole("LIBRARIAN");
                     authorizeRequests.requestMatchers(HttpMethod.POST, "/api/v1/books/create").hasRole("LIBRARIAN");
                     authorizeRequests.requestMatchers(HttpMethod.DELETE, "/api/v1/books/delete/{id}").hasRole("LIBRARIAN");
-                    authorizeRequests.requestMatchers(HttpMethod.GET, "/api/v1/books/latest").hasRole("LIBRARIAN");
                     authorizeRequests.requestMatchers(HttpMethod.PUT, "/api/v1/books/update/{bookId}").hasRole("LIBRARIAN");
                     authorizeRequests.requestMatchers(HttpMethod.GET, "/api/v1/messages").hasRole("LIBRARIAN");
                     authorizeRequests.requestMatchers(HttpMethod.GET, "/api/v1/messages/{id}").hasRole("LIBRARIAN");

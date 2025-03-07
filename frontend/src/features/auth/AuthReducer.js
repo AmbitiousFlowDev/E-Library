@@ -2,15 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 import authenticateUser from "./actions/authenticateUser.js";
 import registerUser   from "./actions/registerUser.js";
 import { jwtDecode }  from "jwt-decode";
+import isTokenExpired from "../../utils/isTokenExpired.js"
 
 const TOKEN = localStorage.getItem("token");
 
 const AuthSlice = createSlice({
   name: "auth",
   initialState: {
-    user: TOKEN ? jwtDecode(TOKEN) : null,
-    token: TOKEN || null,
-    isAuthenticated: !!TOKEN,
+    user: TOKEN && !isTokenExpired(TOKEN) ? jwtDecode(TOKEN) : null,
+    token: TOKEN && !isTokenExpired(TOKEN) ? TOKEN : null,
+    isAuthenticated: TOKEN && !isTokenExpired(TOKEN),
     loading: false,
     error: null,
   },

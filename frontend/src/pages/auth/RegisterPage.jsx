@@ -19,7 +19,7 @@ export default function RegisterPage() {
     
     const handleRegisterSubmit = (credentials) => {
       register(credentials);
-      if (!error) {
+      if (error === null) {
         navigate("/");
       }
     };

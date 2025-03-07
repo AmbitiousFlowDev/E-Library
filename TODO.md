@@ -10,7 +10,7 @@
 
 3. Management of loans and returns:
 - [x] A feature to reserve books with a time limit.
-- [ ] Notifications for overdue loans.
+- [x] Notifications for overdue loans.
 
 4. Develop a secure system:
 - [x] Authentication and authorization to differentiate roles (user, librarian).
