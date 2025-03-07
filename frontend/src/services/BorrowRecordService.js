@@ -2,7 +2,17 @@ import axios from "axios";
 
 class BorrowRecordService {
   constructor() {
-    this.http = axios.create({ baseURL: "/api/v1/borrowRecords" }); // Use consistent URL format
+    this.http = axios.create({ baseURL: "/api/v1/borrowRecords" });
+
+    this.http.interceptors.request.use(config => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    }, error => {
+      return Promise.reject(error);
+    });
   }
 
   async getAllBorrowRecords(page = 0, size = 10, sortBy = "borrowDate") {
@@ -10,6 +20,7 @@ class BorrowRecordService {
       params: { page, size, sortBy },
     });
   }
+
   async getBorrowRecordById(id) {
     return this.http.get(`/${id}`);
   }

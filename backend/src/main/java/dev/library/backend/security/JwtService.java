@@ -23,21 +23,26 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-    public String extractUsername(String token) {
+    public String extractUsername(String token)
+    {
         return this.extractClaims(token, Claims::getSubject);
     }
-    private Claims extractAllClaims(String token) {
+    private Claims extractAllClaims(String token)
+    {
         return Jwts.parserBuilder().setSigningKey(getSignInKey()).build().parseClaimsJws(token).getBody();
     }
-    private SecretKey getSignInKey() {
+    private SecretKey getSignInKey()
+    {
         byte[] keyBytes = Decoders.BASE64.decode(SecurityConstants.JWT_SECRET);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-    public <T> T extractClaims(String token, Function<Claims , T> claimsResolver) {
+    public <T> T extractClaims(String token, Function<Claims , T> claimsResolver)
+    {
         final Claims claims = this.extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails)
+    {
         if (userDetails instanceof User user) {
             Map<String, Object> claims = new HashMap<>();
             claims.put("role" , user.getRole());
@@ -46,7 +51,8 @@ public class JwtService {
         }
         return this.generateToken(new HashMap<>(), userDetails);
     }
-    public String generateToken(Map<String , Object> extractClaims , UserDetails userDetails) {
+    public String generateToken(Map<String , Object> extractClaims , UserDetails userDetails)
+    {
         return Jwts
                 .builder()
                 .setClaims(extractClaims)

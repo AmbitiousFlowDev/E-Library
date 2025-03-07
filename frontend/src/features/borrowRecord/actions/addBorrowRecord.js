@@ -4,7 +4,7 @@ import BorrowRecordService from "../../../services/BorrowRecordService.js";
 const addBorrowRecord = createAsyncThunk('borrowRecord/add', async (borrowRecord , { rejectWithValue }) => {
     try
     {
-        const response = await BorrowRecordService.addBorrowRecord(borrowRecord);
+        const response = await BorrowRecordService.createBorrowRecord(borrowRecord);
         return response.data;
     }
     catch (error)
