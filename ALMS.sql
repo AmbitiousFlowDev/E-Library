@@ -47,7 +47,7 @@ INSERT INTO `books` (`id`, `author`, `copies`, `cover`, `description`, `isbn`, `
 (13, 'Rachael Lippincott', 10, 'b5b25686-c860-48d7-91e4-9cf559feb4c3.jpg', 'Rachael Lippincott is the coauthor...', '9786-5881-310-84', 'All This Time', 1),
 (17, 'Robert Lee', 7, 'f6cb2684-67fb-4a06-aa99-7d53eede5b5e.jpg', 'A detective uncovers...', '978-5678901234', 'Shadows in the Fog', 4),
 (18, 'Laura Adams', 2, '6678c937-2491-4ff9-92ed-e5cb7fca09f0.jpg', 'The life story of...', '978-2468135790', 'Unsung Hero', 2),
-(25, 'Emily A. Vander Veer', 400, 'ed1c4d55-ef17-4613-9d1f-4928bbdc52a5.51k+0tuX4BL._AC_UF1000,1000_QL80_.jpg', 'Coding with JavaScript...', '978-0764506338', 'JavaScript For Dummies 3rd Edition', 5),
+(25, 'Emily A. Vander Veer', 400, 'ed1c4d55-ef17-4613-9d1f-4928bbdc52a5.51k+0tuX4BL._AC_UF1000,1000_QL80_.jpg', 'Coding with JavaScript...', '978-0764506338', 'JavaScript For Dummies 3rd Editio', 5),
 (26, 'Janet Valade', 50, '3ce38dfe-bba0-4c01-a588-781fa85c8add.618ziOwIL1L._AC_UF1000,1000_QL80_.jpg', NULL, '978-0764541667', 'PHP 5 For Dummies', 5);
 
 -- --------------------------------------------------------
