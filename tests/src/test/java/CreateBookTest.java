@@ -5,9 +5,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.time.Duration;
 
 public class CreateBookTest {
@@ -15,7 +15,6 @@ public class CreateBookTest {
     private WebDriverWait wait;
     @BeforeEach
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver-win64/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
@@ -32,13 +31,15 @@ public class CreateBookTest {
     }
 
     public void fillFormWithData() {
+
         driver.findElement(By.name("title")).sendKeys("JavaScript For Dummies 3rd Edition");
         driver.findElement(By.name("description")).sendKeys("Coding with JavaScript For Dummies\" is a beginner-friendly guide that provides easy, hands-on instruction for learning JavaScript, a popular client-side language.");
         driver.findElement(By.name("isbn")).sendKeys("978-3-16-148410-0");
         driver.findElement(By.name("author")).sendKeys("The Javascript For Dummies");
         driver.findElement(By.name("copies")).sendKeys("500");
         driver.findElement(By.cssSelector("#root > div > main > section > form > div > section.flex.flex-col.gap-3.font-\\[poppins\\] > div.flex.items-center.flex-row.gap-2 > select > option:nth-child(2)")).click();
-        driver.findElement(By.xpath("//*[@id=\"root\"]/div/main/section/form/div/section[1]/div[5]/label/input")).sendKeys("D:\\Projects\\E-Library\\tests\\src\\main\\resources\\51k+0tuX4BL.webp");
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/main/section/form/div/section[1]/div[5]/label/input"))
+            .sendKeys("/home/ambitious/Documents/Programming/E-Library/tests/src/main/resources/51k+0tuX4BL.webp");
     }
 
     public void clickCreateBookButton() {
@@ -46,6 +47,7 @@ public class CreateBookTest {
         driver.navigate().refresh();
     }
 
+    
     public void login() throws InterruptedException {
         driver.get("http://localhost:5173/");
         WebElement button = driver.findElement(By.xpath("//*[@id=\"root\"]/div/header/nav/ul/a"));
@@ -53,7 +55,7 @@ public class CreateBookTest {
         WebElement username = driver.findElement(By.name("username"));
         WebElement password = driver.findElement(By.name("password"));
         username.sendKeys("admin");
-        password.sendKeys("753159");
+        password.sendKeys("admin");
         driver.findElement(By.xpath("//*[@id=\"root\"]/div/main/section/form/div/section[2]/div/button")).click();
         Thread.sleep(2000);
     }
@@ -69,6 +71,7 @@ public class CreateBookTest {
         this.clickCreateBook();
         this.fillFormWithData();
         this.clickCreateBookButton();
+        Thread.sleep(5000);
     }
 
     @AfterEach

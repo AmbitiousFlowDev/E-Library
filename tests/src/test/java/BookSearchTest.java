@@ -15,19 +15,18 @@ public class BookSearchTest {
 
     @BeforeEach
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver",
-                "src/main/resources/chromedriver-win64/chromedriver.exe");
+       
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
         driver.manage().window().maximize();
     }
 
     @Test
-    public void testBookSearchAndClick() {
+    public void testBookSearchAndClick() throws InterruptedException {
         driver.get("http://localhost:5173/");
         WebElement searchBar = driver.findElement(By.id("searchedBooks"));
         searchBar.sendKeys("JavaScript For Dummies 3rd Edition");
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("ul > li > a")));
         List<WebElement> results = driver.findElements(By.cssSelector("ul > li > a"));
         for (WebElement result : results) {
@@ -37,6 +36,7 @@ public class BookSearchTest {
             }
         }
         String currentUrl = driver.getCurrentUrl();
+        Thread.sleep(2500);
         Assertions.assertTrue(currentUrl.contains("/books/"), "The URL does not contain '/books/' as expected.");
     }
 
