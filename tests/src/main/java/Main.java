@@ -1,6 +1,10 @@
+import java.io.File;
+
 public class Main {
 
     public  static void main (String[] args){
-        System.out.println("hello");
+        File file = new File("tests/src/main/resources/51k+0tuX4BL.webp");
+        String absolutePath = file.getAbsolutePath();
+        System.out.println(absolutePath);
     }
 }

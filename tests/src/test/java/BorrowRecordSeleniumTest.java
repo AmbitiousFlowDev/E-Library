@@ -20,8 +20,6 @@ public class BorrowRecordSeleniumTest {
 
     @BeforeEach
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver",
-                "src/main/resources/chromedriver-win64/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
@@ -30,61 +28,53 @@ public class BorrowRecordSeleniumTest {
 
     @Test
     public void testBorrowRecord() throws InterruptedException {
-        // Step 1: Navigate to the application
+
         driver.get("http://localhost:5173/");
 
-        // Step 2: Log in
-        WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("btn-login")));
+        WebElement loginButton = driver.findElement(By.xpath("//*[@id=\"root\"]/div/header/nav/ul/a"));
         loginButton.click();
+        Thread.sleep(300);
 
         WebElement usernameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("username")));
-        usernameField.sendKeys("reda");
+        usernameField.sendKeys("admin");
 
         WebElement passwordField = driver.findElement(By.name("password"));
-        passwordField.sendKeys("1234");
+        passwordField.sendKeys("admin");
 
-        WebElement submitButton = driver.findElement(By.id("btn-signin"));
+        WebElement submitButton = driver
+                .findElement(By.xpath("//*[@id=\"root\"]/div/main/section/form/div/section[2]/div/button"));
         submitButton.click();
         Thread.sleep(4000);
-    
 
-    // Locate the search bar and enter the book name
-    WebElement searchBar = driver.findElement(By.id("searchedBooks"));
-    searchBar.sendKeys("PHP 5 For Dummies");
+        WebElement searchBar = driver.findElement(By.id("searchedBooks"));
+        searchBar.sendKeys("Javascript");
 
-    // Wait for the dropdown to populate
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("ul > li > a")));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("ul > li > a")));
 
-    // Locate the dropdown results
-    List<WebElement> results = driver.findElements(By.cssSelector("ul > li > a"));
+        List<WebElement> results = driver.findElements(By.cssSelector("ul > li > a"));
 
-    // Click on the first result that matches the book title
-    for (WebElement result : results) {
-        if (result.getText().contains("PHP 5 For Dummies")) {
-            result.click();
-            break;
+        for (WebElement result : results) {
+            if (result.getText().contains("Javascript")) {
+                result.click();
+                break;
+            }
         }
-    }
 
-    // Verify that the URL has changed to the book's details page
-    String currentUrl = driver.getCurrentUrl();
-    assertTrue(currentUrl.contains("/books/"), "The URL does not contain '/books/' as expected.");
-    Thread.sleep(4000);
+        String currentUrl = driver.getCurrentUrl();
+        assertTrue(currentUrl.contains("/books/"), "The URL does not contain '/books/' as expected.");
+        Thread.sleep(4000);
 
+        WebElement Btnborrow = driver.findElement(By.xpath("//*[@id=\"root\"]/div/main/section/div/div/div/a"));
+        Btnborrow.click();
+        Thread.sleep(2000);
 
-    WebElement Btnborrow= driver.findElement(By.id("btnborrow"));
-    Btnborrow.click();
-    Thread.sleep(2000);
-
-    WebElement BtnborrowConfirm= driver.findElement(By.id("btnborrowConfirm"));
+        WebElement BtnborrowConfirm = driver.findElement(By.xpath("//*[@id=\"root\"]/div/main/section/div/div/div/button"));
         BtnborrowConfirm.click();
-    Thread.sleep(2000);
+        Thread.sleep(2000);
 
-    
-
-    
-
+        driver.switchTo().alert().accept();
+        Thread.sleep(2500);
     }
 
     @AfterEach

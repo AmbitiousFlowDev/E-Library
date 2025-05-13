@@ -2,6 +2,7 @@ import java.time.Duration;
 import java.util.Random;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Alert;
@@ -10,6 +11,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import dev.failsafe.internal.util.Assert;
+
 public class RegisterUserTest {
 
     private WebDriver driver;
@@ -17,10 +20,8 @@ public class RegisterUserTest {
     int randomNumber = random.nextInt(1000); 
     @BeforeEach
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver",
-                "src/main/resources/chromedriver-win64/chromedriver.exe");
         driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
     }
 
@@ -32,51 +33,57 @@ public class RegisterUserTest {
     }
 
     @Test
-    public void testBorrowRecordFlow() throws InterruptedException {
-        // Step 1: Register a User
+    public void testRegister() throws InterruptedException {
+        
         driver.get("http://localhost:5173/");
-        Thread.sleep(1000); 
+        Thread.sleep(300); 
 
-        WebElement loginButton= driver.findElement(By.id("btn-login"));
+        WebElement loginButton= driver.findElement(By.xpath("//*[@id=\"root\"]/div/header/nav/ul/a"));
         loginButton.click();
-        Thread.sleep(1000); 
+        Thread.sleep(300); 
 
-        WebElement registerButton= driver.findElement(By.id("btn-register"));
+        WebElement registerButton= driver.findElement(By.xpath("//*[@id=\"root\"]/div/main/section/form/div/section[2]/div/span/a"));
         registerButton.click();
-        Thread.sleep(1000);
-    WebElement usernameField = driver.findElement(By.name("username"));
-    usernameField.sendKeys("reda" + randomNumber); 
+        Thread.sleep(300);
+
+        WebElement usernameField = driver.findElement(By.name("username"));
+        usernameField.sendKeys("reda" + randomNumber); 
+        
+        WebElement fullNameField = driver.findElement(By.name("Full Name"));
+        fullNameField.sendKeys("Reda Ganoutre" + randomNumber);
+
+        WebElement emailField = driver.findElement(By.name("email"));
+        emailField.sendKeys("reda"+randomNumber+"@gmail.com");
+
+        WebElement passwordField = driver.findElement(By.name("password"));
+        passwordField.sendKeys("1234");
+
+        Thread.sleep(3000);
+
     
-    WebElement fullNameField = driver.findElement(By.name("Full Name"));
-    fullNameField.sendKeys("Reda Ganoutre" + randomNumber);
+        WebElement submitButton = driver.findElement(By.xpath("//*[@id=\"root\"]/div/main/section/form/div/section[2]/div/button"));
+        submitButton.click();
+        Thread.sleep(4000);
 
-    WebElement emailField = driver.findElement(By.name("email"));
-    emailField.sendKeys("reda"+randomNumber+"@gmail.com");
-
-    WebElement passwordField = driver.findElement(By.name("password"));
-    passwordField.sendKeys("1234");
-
-    Thread.sleep(3000);
-
+        try 
+        {
+            Alert alert = driver.switchTo().alert();
+            System.out.println("Alert message: " + alert.getText());
+            alert.accept();
+        } 
+        catch (Exception e) 
+        {
+            System.out.println("No alert present.");
+        }
     
-    WebElement submitButton = driver.findElement(By.id("btn-SignUp"));
-    submitButton.click();
-    Thread.sleep(4000);
-     // Handle the alert
-    try {
-        Alert alert = driver.switchTo().alert(); // Switch to the alert
-        System.out.println("Alert message: " + alert.getText()); // Print the alert message for debugging
-        alert.accept(); // Click the "OK" button to dismiss the alert
-    } catch (Exception e) {
-        System.out.println("No alert present.");
-    }    
-    WebElement profileButton = driver.findElement(By.id("profile-link"));
-    profileButton.click();
-    Thread.sleep(4000);
+        WebElement profileButton = driver.findElement(By.xpath("//*[@id=\"root\"]/div/header/nav/a"));
+        profileButton.click();
+        Thread.sleep(3500);
+        WebElement btnlogout= driver.findElement(By.xpath("//*[@id=\"root\"]/div/header/nav/ul/button"));
+        btnlogout.click();
+        Thread.sleep(2500);
 
-    WebElement btnlogout= driver.findElement(By.id("btn-logout"));
-    btnlogout.click();
-    Thread.sleep(4000);
-
+        String currentUrl = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:5173/", currentUrl);
     }
 }
